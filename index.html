@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valerii's Learning Space</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#f5f0e8;--ink:#1a1410;--rose:#c8715a;--sage:#7a9e87;
+  --gold:#c9a84c;--paper:#ede8dc;--shadow:rgba(26,20,16,.12);
+  --muted:#7a6e64;--border:rgba(26,20,16,.09);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:100;opacity:.35;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");}
+
+/* Header */
+header{padding:2.2rem 2rem 0;text-align:center;}
+.greeting{font-weight:300;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--rose);margin-bottom:.55rem;opacity:0;animation:fadeUp .6s ease forwards .1s;}
+h1{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,5vw,3.4rem);font-weight:700;line-height:1.05;letter-spacing:-.02em;opacity:0;animation:fadeUp .7s ease forwards .25s;}
+h1 em{font-style:italic;color:var(--rose);}
+.subtitle{font-size:.88rem;color:var(--muted);margin-top:.6rem;font-weight:300;opacity:0;animation:fadeUp .7s ease forwards .4s;}
+.save-bar{display:flex;align-items:center;justify-content:center;gap:.5rem;font-size:.68rem;color:var(--sage);margin-top:.5rem;height:20px;opacity:0;animation:fadeUp .6s ease forwards .45s;}
+.save-bar.show .save-status{opacity:1;}
+.save-status{opacity:0;transition:opacity .5s;display:flex;align-items:center;gap:.3rem;}
+.save-dot{width:6px;height:6px;border-radius:50%;background:var(--sage);}
+
+/* Tabs */
+.tab-nav{display:flex;justify-content:center;margin:1.6rem auto 0;max-width:440px;background:var(--paper);border-radius:4px;padding:3px;opacity:0;animation:fadeUp .6s ease forwards .55s;}
+.tab-btn{flex:1;padding:.52rem .9rem;background:transparent;border:none;font-family:'DM Sans',sans-serif;font-size:.79rem;font-weight:500;color:var(--muted);cursor:pointer;border-radius:3px;transition:all .2s;white-space:nowrap;}
+.tab-btn.active{background:var(--ink);color:var(--cream);}
+.tab-btn:not(.active):hover{color:var(--ink);}
+.tab-page{display:none;}.tab-page.active{display:block;}
+
+/* Units page */
+.units-page{max-width:860px;margin:2rem auto 3rem;padding:0 1.5rem;}
+.units-page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.4rem;opacity:0;animation:fadeUp .5s ease forwards .05s;}
+.units-page-header h2{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;}
+.units-page-header h2 span{color:var(--rose);font-style:italic;}
+.btn-new-unit{display:flex;align-items:center;gap:.4rem;background:var(--ink);color:var(--cream);border:none;border-radius:3px;padding:.48rem .9rem;font-family:'DM Sans',sans-serif;font-size:.77rem;font-weight:500;cursor:pointer;transition:background .2s;}
+.btn-new-unit:hover{background:var(--rose);}
+
+/* Unit accordion */
+.unit-item{background:var(--paper);border-radius:5px;border:1px solid var(--border);margin-bottom:.6rem;overflow:hidden;transition:box-shadow .2s;opacity:0;animation:fadeUp .45s ease forwards;}
+.unit-item:nth-child(1){animation-delay:.07s}.unit-item:nth-child(2){animation-delay:.14s}.unit-item:nth-child(3){animation-delay:.21s}
+.unit-item:hover{box-shadow:0 3px 16px var(--shadow);}
+.unit-header{display:flex;align-items:center;padding:.9rem 1.4rem;cursor:pointer;user-select:none;gap:1rem;}
+.unit-number{font-family:'Playfair Display',serif;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--rose);min-width:52px;}
+.unit-title-text{font-size:.9rem;font-weight:500;flex:1;}
+.unit-chevron{font-size:.6rem;color:#9a8e84;transition:transform .25s;margin-left:.4rem;}
+.unit-item.open .unit-chevron{transform:rotate(180deg);}
+.unit-body{max-height:0;overflow:hidden;transition:max-height .45s ease;}
+.unit-item.open .unit-body{max-height:999999px;}
+.unit-body-inner{padding:.5rem 1.2rem 1.2rem;border-top:1px solid var(--border);}
+
+/* Lesson sub-accordion */
+.lesson-accordion{border:1px solid var(--border);border-radius:4px;margin-top:.6rem;overflow:hidden;}
+.lesson-acc-header{display:flex;align-items:center;padding:.65rem 1rem;cursor:pointer;user-select:none;gap:.7rem;background:rgba(26,20,16,.02);transition:background .15s;}
+.lesson-acc-header:hover{background:rgba(26,20,16,.045);}
+.lesson-acc-tag{font-family:'Playfair Display',serif;font-size:.75rem;font-weight:700;color:var(--rose);min-width:68px;flex-shrink:0;}
+.lesson-acc-title{font-size:.78rem;font-weight:400;flex:1;color:var(--muted);}
+.lesson-acc-meta{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:#bbb;white-space:nowrap;}
+.lesson-acc-chevron{font-size:.55rem;color:#9a8e84;transition:transform .25s;margin-left:.2rem;}
+.lesson-accordion.open .lesson-acc-chevron{transform:rotate(180deg);}
+.lesson-acc-body{max-height:0;overflow:hidden;transition:max-height .4s ease;}
+.lesson-accordion.open .lesson-acc-body{max-height:999999px;}
+.lesson-acc-inner{padding:.4rem .9rem 1rem;}
+.lesson-meta-line{font-size:.67rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:.35rem 0 .8rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);}
+
+/* Section tags */
+.section-tag{display:inline-block;font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;padding:.16rem .5rem;border-radius:2px;margin-bottom:.6rem;margin-top:.7rem;}
+.tag-vocab{background:#d4e8dc;color:#3a6e50;}.tag-grammar{background:#dce8f0;color:#2a5870;}
+.tag-pronun{background:#f0e8d0;color:#7a5820;}.tag-listen{background:#e8dce0;color:#6a3040;}
+.tag-writing{background:#e0e8dc;color:#3a5838;}
+
+/* Notes & Vocab sections */
+.unit-notes-section{padding:.6rem 0 .4rem;border-bottom:1px solid var(--border);margin-bottom:.8rem;}
+.unit-notes-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;}
+@media(max-width:600px){.unit-notes-row{grid-template-columns:1fr;}}
+.unit-notes-col{display:flex;flex-direction:column;gap:.3rem;}
+.unit-notes-label{font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+.unit-textarea{width:100%;border:1.5px solid var(--border);border-radius:3px;padding:.55rem .7rem;font-family:'DM Sans',sans-serif;font-size:.8rem;background:var(--cream);color:var(--ink);outline:none;resize:vertical;min-height:70px;line-height:1.55;transition:border-color .2s;}
+.unit-textarea:focus{border-color:var(--rose);}
+.unit-textarea::placeholder{color:#bbb;}
+
+/* Global notes */
+.global-notes-wrap{max-width:560px;margin:1.2rem auto 0;padding:0 1.5rem;opacity:0;animation:fadeUp .6s ease forwards .48s;}
+.global-notes-header{display:flex;align-items:center;justify-content:space-between;padding:.45rem .75rem;background:var(--paper);border:1px solid var(--border);border-radius:4px 4px 0 0;cursor:pointer;user-select:none;transition:background .15s;}
+.global-notes-header:hover{background:#e8e2d6;}
+.global-notes-title{font-size:.75rem;font-weight:600;letter-spacing:.06em;color:var(--muted);}
+.global-notes-chevron{font-size:.55rem;color:#aaa;transition:transform .25s;}
+.global-notes-wrap.open .global-notes-chevron{transform:rotate(180deg);}
+.global-notes-body{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+.global-notes-wrap.open .global-notes-body{max-height:300px;}
+.global-notes-area{display:block;width:100%;border:1px solid var(--border);border-top:none;border-radius:0 0 4px 4px;padding:.65rem .75rem;font-family:'DM Sans',sans-serif;font-size:.82rem;background:var(--cream);color:var(--ink);outline:none;resize:none;height:100px;line-height:1.6;transition:border-color .2s;}
+.global-notes-area:focus{border-color:var(--rose);}
+.global-notes-area::placeholder{color:#bbb;}
+
+/* Block picker */
+.btn-add-block{display:flex;align-items:center;gap:.35rem;background:none;border:1.5px dashed rgba(26,20,16,.18);border-radius:3px;padding:.38rem .75rem;font-family:'DM Sans',sans-serif;font-size:.76rem;color:var(--muted);cursor:pointer;transition:all .2s;margin-top:.7rem;width:100%;justify-content:center;}
+.btn-add-block:hover{border-color:var(--rose);color:var(--rose);}
+.block-picker{display:none;flex-wrap:wrap;gap:.4rem;margin-top:.5rem;padding:.7rem;background:rgba(26,20,16,.03);border-radius:3px;border:1px solid var(--border);}
+.block-picker.open{display:flex;}
+.block-type-btn{padding:.35rem .8rem;border:1.5px solid var(--border);border-radius:3px;font-family:'DM Sans',sans-serif;font-size:.76rem;cursor:pointer;background:var(--cream);color:var(--ink);transition:all .15s;}
+.block-type-btn:hover{border-color:var(--rose);color:var(--rose);}
+
+/* Content blocks */
+.content-block{border:1px solid var(--border);border-radius:4px;padding:.7rem .9rem;margin-top:.6rem;background:var(--cream);position:relative;}
+.content-block .block-label{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem;}
+.content-block .block-delete{position:absolute;top:.5rem;right:.6rem;background:none;border:none;cursor:pointer;color:#c0b4aa;font-size:.75rem;transition:color .15s;}
+.content-block .block-delete:hover{color:var(--rose);}
+.block-textarea{width:100%;border:1px solid var(--border);border-radius:3px;padding:.5rem .65rem;font-family:'DM Sans',sans-serif;font-size:.82rem;background:var(--paper);color:var(--ink);outline:none;resize:vertical;min-height:70px;line-height:1.6;transition:border-color .2s;}
+.block-textarea:focus{border-color:var(--rose);}
+.block-text-area{width:100%;min-height:80px;border:1px solid var(--border);border-radius:3px;padding:.6rem .8rem;font-family:'DM Sans',sans-serif;font-size:.85rem;line-height:1.7;background:var(--paper);outline:none;resize:vertical;color:var(--ink);}
+.block-text-area:focus{border-color:var(--rose);}
+.block-link-row{display:flex;gap:.5rem;align-items:center;}
+.block-link-input{flex:1;border:1px solid var(--border);border-radius:3px;padding:.45rem .65rem;font-family:'DM Sans',sans-serif;font-size:.82rem;background:var(--paper);color:var(--ink);outline:none;transition:border-color .2s;}
+.block-link-input:focus{border-color:var(--rose);}
+.block-link-btn{padding:.4rem .8rem;background:var(--rose);color:white;border:none;border-radius:3px;font-size:.75rem;cursor:pointer;white-space:nowrap;}
+.block-task-list{list-style:none;margin:.3rem 0;}
+.block-task-item{display:flex;align-items:center;gap:.5rem;padding:.3rem 0;font-size:.82rem;border-bottom:1px solid rgba(26,20,16,.05);}
+.block-task-item:last-child{border-bottom:none;}
+.block-task-check{width:14px;height:14px;border:1.5px solid var(--rose);border-radius:3px;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.58rem;color:white;transition:all .15s;}
+.block-task-check.done{background:var(--sage);border-color:var(--sage);}
+.block-task-text{flex:1;}
+.block-task-text.done{text-decoration:line-through;color:#a89e94;}
+.block-add-task{display:flex;gap:.4rem;margin-top:.5rem;}
+.block-add-task input{flex:1;border:1px solid var(--border);border-radius:3px;padding:.4rem .6rem;font-family:'DM Sans',sans-serif;font-size:.8rem;background:var(--paper);outline:none;}
+.block-add-task input:focus{border-color:var(--rose);}
+.block-add-task button{padding:.4rem .7rem;background:var(--sage);color:white;border:none;border-radius:3px;font-size:.78rem;cursor:pointer;}
+.vocab-table{width:100%;border-collapse:collapse;font-size:.82rem;margin-top:.3rem;}
+.vocab-table th{text-align:left;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:.3rem .5rem;border-bottom:1.5px solid var(--border);}
+.vocab-table td{padding:.3rem .5rem;border-bottom:1px solid rgba(26,20,16,.05);}
+.vocab-table input{width:100%;border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:.82rem;color:var(--ink);outline:none;padding:.1rem 0;}
+.vocab-table tr:last-child td{border-bottom:none;}
+.btn-add-vocab-row{font-size:.73rem;color:var(--muted);background:none;border:none;cursor:pointer;margin-top:.4rem;padding:.2rem 0;}
+.btn-add-vocab-row:hover{color:var(--rose);}
+.block-img-upload{display:flex;flex-direction:column;gap:.5rem;}
+.block-img-preview{max-width:100%;border-radius:4px;display:none;margin-top:.4rem;}
+.block-img-preview.show{display:block;}
+.block-img-btn{padding:.35rem .8rem;background:var(--paper);border:1.5px solid var(--border);border-radius:3px;font-size:.76rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.block-img-btn:hover{border-color:var(--rose);color:var(--rose);}
+.block-img-caption{width:100%;border:1px solid var(--border);border-radius:3px;padding:.4rem .6rem;font-family:'DM Sans',sans-serif;font-size:.8rem;background:var(--paper);outline:none;margin-top:.4rem;}
+.block-img-caption:focus{border-color:var(--rose);}
+
+/* HW list */
+.simple-hw-list{list-style:none;}
+.simple-hw-list li{display:flex;align-items:flex-start;gap:.55rem;padding:.45rem 0;border-bottom:1px solid rgba(26,20,16,.05);font-size:.82rem;}
+.simple-hw-list li:last-child{border-bottom:none;}
+.hw-chk{width:15px;height:15px;border:1.5px solid var(--rose);border-radius:3px;flex-shrink:0;margin-top:2px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.58rem;color:white;transition:all .15px;}
+.hw-chk.done{background:var(--sage);border-color:var(--sage);}
+.hw-txt{flex:1;color:#4a3e34;transition:all .15s;}
+.hw-txt.done{text-decoration:line-through;color:#a89e94;}
+.btn-add-hw{display:flex;align-items:center;gap:.32rem;background:none;border:1.5px dashed rgba(26,20,16,.15);border-radius:3px;padding:.35rem .7rem;font-family:'DM Sans',sans-serif;font-size:.74rem;color:var(--muted);cursor:pointer;transition:all .2s;margin-top:.5rem;}
+.btn-add-hw:hover{border-color:var(--rose);color:var(--rose);}
+.add-hw-form{display:none;flex-direction:column;gap:.38rem;margin-top:.5rem;padding:.75rem;background:rgba(26,20,16,.03);border-radius:3px;}
+.add-hw-form.visible{display:flex;}
+.form-row{display:flex;gap:.38rem;flex-wrap:wrap;}
+.form-row input{padding:.44rem .65rem;border:1.5px solid rgba(26,20,16,.14);border-radius:3px;font-family:'DM Sans',sans-serif;font-size:.81rem;background:var(--cream);color:var(--ink);outline:none;transition:border-color .2s;}
+.form-row input:focus{border-color:var(--rose);}
+.inp-main{flex:1;min-width:120px;}.inp-pages{width:85px;}.inp-url{flex:1;min-width:100px;}
+.form-actions{display:flex;gap:.38rem;}
+.btn-save-hw{background:var(--rose);color:white;border:none;border-radius:3px;padding:.4rem .85rem;font-family:'DM Sans',sans-serif;font-size:.76rem;font-weight:500;cursor:pointer;}
+.btn-cancel-hw{background:none;border:1.5px solid rgba(26,20,16,.15);border-radius:3px;padding:.4rem .7rem;font-family:'DM Sans',sans-serif;font-size:.76rem;cursor:pointer;color:var(--muted);}
+
+/* Gap inputs (for exercises teacher might add) */
+.gap{display:inline-block;border:none;border-bottom:1.5px solid #c8b4a0;background:transparent;font-family:'DM Sans',sans-serif;font-size:.82rem;color:var(--ink);outline:none;min-width:88px;padding:.04rem .22rem;vertical-align:middle;transition:border-color .2s;}
+.gap:focus{border-color:var(--ink);}
+.gap.sm{min-width:54px;}.gap.lg{min-width:155px;}
+.gap.correct{border-bottom-color:var(--sage)!important;background:rgba(122,158,135,.08);}
+.gap.wrong{border-bottom-color:#c8715a!important;background:rgba(200,113,90,.07);}
+.write-area{width:100%;border:1.5px solid var(--border);border-radius:3px;padding:.6rem .85rem;font-family:'DM Sans',sans-serif;font-size:.82rem;background:var(--cream);color:var(--ink);outline:none;resize:vertical;min-height:85px;transition:border-color .2s;line-height:1.6;}
+.write-area:focus{border-color:var(--rose);}
+.word-count{font-size:.7rem;color:var(--muted);margin-top:.25rem;}
+
+/* Materials */
+.materials-page{max-width:860px;margin:2rem auto 1rem;padding:0 1.5rem;}
+.materials-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;opacity:0;animation:fadeUp .5s ease forwards .05s;}
+.materials-header h2{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;}
+.materials-header h2 span{color:var(--rose);font-style:italic;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:.85rem;}
+.card{background:var(--paper);border-radius:4px;padding:1.2rem 1.3rem;position:relative;overflow:hidden;cursor:pointer;transition:transform .25s,box-shadow .25s;opacity:0;animation:fadeUp .5s ease forwards;text-decoration:none;color:inherit;display:block;border:1px solid var(--border);}
+.card:nth-child(1){animation-delay:.08s}.card:nth-child(2){animation-delay:.16s}.card:nth-child(3){animation-delay:.24s}.card:nth-child(4){animation-delay:.32s}.card:nth-child(5){animation-delay:.4s}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 20px var(--shadow);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--card-accent,var(--rose));transform:scaleX(0);transform-origin:left;transition:transform .25s;}
+.card:hover::before{transform:scaleX(1);}
+.card-icon{font-size:1.35rem;margin-bottom:.75rem;display:block;}
+.card-label{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--card-accent,var(--rose));font-weight:500;margin-bottom:.28rem;}
+.card h3{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;line-height:1.2;margin-bottom:.35rem;}
+.card p{font-size:.75rem;color:#6b5f55;line-height:1.42;font-weight:300;}
+.card-arrow{position:absolute;bottom:.9rem;right:1rem;font-size:.88rem;color:var(--card-accent,var(--rose));opacity:0;transform:translateX(-5px);transition:all .25s;}
+.card:hover .card-arrow{opacity:1;transform:translateX(0);}
+.card.sage{--card-accent:var(--sage)}.card.gold{--card-accent:var(--gold)}.card.rose{--card-accent:var(--rose)}.card.blue{--card-accent:#5a7a9e}
+.card.board{grid-column:1/-1;display:flex;align-items:center;gap:1.2rem;padding:1.2rem 1.7rem;background:var(--ink);color:var(--cream);--card-accent:var(--gold);}
+.card.board p{color:#b0a89e}.card.board .card-label{color:var(--gold)}.card.board .card-arrow{color:var(--gold)}
+.board-text{flex:1}.board-visual{width:46px;height:46px;border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;animation:spin 20s linear infinite;}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.add-section{max-width:860px;margin:.7rem auto 3rem;padding:0 1.5rem;opacity:0;animation:fadeUp .5s ease forwards .5s;}
+.add-btn{display:flex;align-items:center;gap:.55rem;background:transparent;border:1.5px dashed rgba(26,20,16,.2);border-radius:4px;padding:.85rem 1.4rem;width:100%;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.82rem;color:var(--muted);transition:all .25s;}
+.add-btn:hover{border-color:var(--rose);color:var(--rose);}
+
+/* Placeholder lesson block */
+.lesson-placeholder{background:rgba(26,20,16,.025);border:1.5px dashed rgba(26,20,16,.12);border-radius:4px;padding:1.4rem;text-align:center;margin-top:.6rem;}
+.lesson-placeholder p{font-size:.82rem;color:var(--muted);margin-bottom:.6rem;}
+.lesson-placeholder strong{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--ink);display:block;margin-bottom:.3rem;}
+
+/* Modals */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(26,20,16,.55);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--cream);border-radius:6px;padding:1.9rem;width:90%;max-width:415px;position:relative;animation:scaleIn .25s ease;}
+@keyframes scaleIn{from{transform:scale(.95);opacity:0}to{transform:scale(1);opacity:1}}
+.modal h3{font-family:'Playfair Display',serif;font-size:1.25rem;margin-bottom:1rem;}
+.modal label{display:block;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.32rem;margin-top:.8rem;}
+.modal input,.modal select{width:100%;padding:.62rem .82rem;border:1.5px solid rgba(26,20,16,.14);border-radius:3px;font-family:'DM Sans',sans-serif;font-size:.85rem;background:var(--paper);color:var(--ink);outline:none;transition:border-color .2s;}
+.modal input:focus,.modal select:focus{border-color:var(--rose);}
+.modal-actions{display:flex;gap:.75rem;margin-top:1.5rem;}
+.btn-modal-add{flex:1;padding:.72rem;background:var(--rose);color:white;border:none;border-radius:3px;font-family:'DM Sans',sans-serif;font-size:.84rem;font-weight:500;cursor:pointer;transition:background .2s;}
+.btn-modal-add:hover{background:#b5604a;}
+.btn-modal-cancel{padding:.72rem 1.1rem;background:transparent;border:1.5px solid rgba(26,20,16,.18);border-radius:3px;font-family:'DM Sans',sans-serif;font-size:.84rem;cursor:pointer;}
+.close-modal{position:absolute;top:.95rem;right:1.1rem;background:none;border:none;font-size:1.05rem;cursor:pointer;color:var(--muted);}
+
+/* Teacher mode */
+.teacher-mode-btn{position:fixed;bottom:1.2rem;right:1.2rem;background:var(--ink);color:var(--cream);border:none;border-radius:20px;padding:.5rem 1rem;font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:600;cursor:pointer;z-index:200;box-shadow:0 4px 14px var(--shadow);transition:all .2s;display:flex;align-items:center;gap:.4rem;letter-spacing:.04em;}
+.teacher-mode-btn:hover{background:var(--rose);}
+.teacher-mode-btn.active{background:var(--rose);}
+.teacher-mode-bar{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--ink);color:var(--cream);padding:.5rem 1.5rem;z-index:199;font-size:.75rem;align-items:center;gap:1rem;box-shadow:0 -4px 16px rgba(0,0,0,.2);}
+.teacher-mode-bar.show{display:flex;}
+body.teacher-mode [contenteditable="true"]{outline:1.5px dashed rgba(200,113,90,.5);border-radius:3px;padding:.1rem .2rem;background:rgba(200,113,90,.04);cursor:text;min-width:20px;display:inline-block;}
+body.teacher-mode [contenteditable="true"]:focus{outline:2px solid var(--rose);background:rgba(200,113,90,.08);}
+
+/* Lesson add button */
+.btn-add-lesson{display:flex;align-items:center;gap:.35rem;background:none;border:1.5px dashed rgba(26,20,16,.15);border-radius:3px;padding:.4rem .8rem;font-family:'DM Sans',sans-serif;font-size:.76rem;color:var(--muted);cursor:pointer;transition:all .2s;margin-top:.5rem;}
+.btn-add-lesson:hover{border-color:var(--rose);color:var(--rose);}
+
+footer{text-align:center;padding:2rem;font-size:.7rem;color:#a89e94;letter-spacing:.05em;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){.card.board{flex-direction:column;text-align:center}h1{font-size:1.9rem}.lesson-acc-title{display:none}}
+</style>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+</head>
+<body>
+
+<header>
+  <p class="greeting">Welcome back, Valerii</p>
+  <h1>Valerii's <em>Learning Space</em> ✦</h1>
+  <p class="subtitle">Everything you need — in one place.</p>
+  <div class="save-bar" id="saveBar">
+    <div class="save-status"></div>
+  </div>
+  <div class="global-notes-wrap">
+    <div class="global-notes-header" onclick="toggleGlobalNotes()">
+      <span class="global-notes-title">🗒 Notes</span>
+      <span class="global-notes-chevron" id="globalNotesChevron">▼</span>
+    </div>
+    <div class="global-notes-body" id="globalNotesBody">
+      <textarea class="global-notes-area" id="globalNotes" placeholder="General notes, reminders, anything…" oninput="saveAll()"></textarea>
+    </div>
+  </div>
+  <nav class="tab-nav" style="max-width:680px">
+    <button class="tab-btn active" data-tab="classwork">🖊 Classwork</button>
+    <button class="tab-btn" data-tab="homework">✏️ Homework</button>
+    <button class="tab-btn" data-tab="vocabulary">📖 Vocabulary</button>
+    <button class="tab-btn" data-tab="review">⭐ Review</button>
+    <button class="tab-btn" data-tab="materials">📚 Materials</button>
+  </nav>
+</header>
+
+<!-- ══════════════════════════════════════ -->
+<!-- CLASSWORK TAB -->
+<!-- ══════════════════════════════════════ -->
+<div class="tab-page active" id="tab-classwork">
+  <div class="units-page">
+    <div class="units-page-header">
+      <h2><span>Classwork</span> Units</h2>
+      <button class="btn-new-unit" onclick="openModal('cunit')">＋ Add unit</button>
+    </div>
+    <a href="https://miro.com/welcomeonboard/TVFwTVoxM3RSb09IejNORHdPVVAwVS95czBUbktZcjR3OStPbW1IN0lYUG9JdWIvcXg0T0NaR3p1RnUrbnI3WHFMWTg3QS9uZkRSZFU0ZUUrSVZOdjNrNVdaZFN4cnJ0THd4R1p2Qnh2M0lDQ1pWazVDNk1UVU9VOEJVN1JEbGF3VHhHVHd5UWtSM1BidUtUYmxycDRnPT0hdjE=?share_link_id=37157548549" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:.7rem;padding:.85rem 1.1rem;background:linear-gradient(135deg,#ffd966,#ffc94d);border:1px solid rgba(26,20,16,.12);border-radius:5px;text-decoration:none;color:var(--ink);margin-bottom:1.2rem;box-shadow:0 2px 10px var(--shadow);transition:transform .15s,box-shadow .15s;" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 4px 16px var(--shadow)'" onmouseout="this.style.transform='';this.style.boxShadow='0 2px 10px var(--shadow)'">
+      <span style="font-size:1.4rem">🗂️</span>
+      <div style="flex:1">
+        <div style="font-size:.62rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:#7a5820;margin-bottom:.15rem">Interactive Board</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700">Open Miro Board</div>
+      </div>
+      <span style="font-size:.85rem;color:#7a5820">→</span>
+    </a>
+    <div id="cwUnitsList">
+
+      <!-- Unit 1 -->
+      <div class="unit-item" id="cw-unit-1">
+        <div class="unit-header" onclick="toggleUnit('cw-unit-1')">
+          <span class="unit-number">Unit 1</span>
+          <span class="unit-title-text">Unit 1</span>
+          <span class="unit-chevron">▼</span>
+        </div>
+        <div class="unit-body"><div class="unit-body-inner">
+          <div class="unit-notes-section">
+            <div class="unit-notes-row">
+              <div class="unit-notes-col">
+                <div class="unit-notes-label">📝 Notes</div>
+                <textarea class="unit-textarea" id="hwnotes-cw-1" placeholder="Notes from class…" oninput="saveAll()"></textarea>
+              </div>
+              <div class="unit-notes-col">
+                <div class="unit-notes-label">📖 Vocabulary</div>
+                <textarea class="unit-textarea" id="vocabnotes-cw-1" placeholder="New words, phrases, translations…" oninput="saveAll()"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lesson A -->
+          <div class="lesson-accordion" id="cw-acc-1a">
+            <div class="lesson-acc-header" onclick="toggleAcc('cw-acc-1a')">
+              <span class="lesson-acc-tag">Lesson A</span>
+              <span class="lesson-acc-title">Lesson A — topic</span>
+              <span class="lesson-acc-chevron">▼</span>
+            </div>
+            <div class="lesson-acc-body"><div class="lesson-acc-inner">
+              <div class="lesson-meta-line">Grammar: · Vocabulary: · Pronunciation:</div>
+              <div class="lesson-placeholder">
+                <strong>Add lesson content</strong>
+                <p>Use the blocks below to add notes, texts, tasks, vocabulary, or links for this lesson.</p>
+              </div>
+              <div id="blocks-cw-acc-1a"></div>
+              <div class="block-picker" id="blockpicker-cw-acc-1a">
+                <button class="block-type-btn" onclick="addBlock('cw-acc-1a','note')">📝 Note</button>
+                <button class="block-type-btn" onclick="addBlock('cw-acc-1a','text')">📄 Text</button>
+                <button class="block-type-btn" onclick="addBlock('cw-acc-1a','image')">🖼️ Image</button>
+                <button class="block-type-btn" onclick="addBlock('cw-acc-1a','link')">🔗 Link</button>
+                <button class="block-type-btn" onclick="addBlock('cw-acc-1a','task')">✅ Tasks</button>
+                <button class="block-type-btn" onclick="addBlock('cw-acc-1a','vocab')">📋 Vocabulary</button>
+              </div>
+              <button class="btn-add-block" onclick="toggleBlockPicker('cw-acc-1a')">＋ Add block</button>
+            </div></div>
+          </div><!-- /lesson A -->
+
+          <!-- Lesson B -->
+          <div class="lesson-accordion" id="cw-acc-1b">
+            <div class="lesson-acc-header" onclick="toggleAcc('cw-acc-1b')">
+              <span class="lesson-acc-tag">Lesson B</span>
+              <span class="lesson-acc-title">Lesson B — topic</span>
+              <span class="lesson-acc-chevron">▼</span>
+            </div>
+            <div class="lesson-acc-body"><div class="lesson-acc-inner">
+              <div class="lesson-meta-line">Grammar: · Vocabulary: · Pronunciation:</div>
+              <div class="lesson-placeholder">
+                <strong>Add lesson content</strong>
+                <p>Use the blocks below to add notes, texts, tasks, vocabulary, or links for this lesson.</p>
+              </div>
+              <div id="blocks-cw-acc-1b"></div>
+              <div class="block-picker" id="blockpicker-cw-acc-1b">
+                <button class="block-type-btn" onclick="addBlock('cw-acc-1b','note')">📝 Note</button>
+                <button class="block-type-btn" onclick="addBlock('cw-acc-1b','text')">📄 Text</button>
+                <button class="block-type-btn" onclick="addBlock('cw-acc-1b','image')">🖼️ Image</button>
+                <button class="block-type-btn" onclick="addBlock('cw-acc-1b','link')">🔗 Link</button>
+                <button class="block-type-btn" onclick="addBlock('cw-acc-1b','task')">✅ Tasks</button>
+                <button class="block-type-btn" onclick="addBlock('cw-acc-1b','vocab')">📋 Vocabulary</button>
+              </div>
+              <button class="btn-add-block" onclick="toggleBlockPicker('cw-acc-1b')">＋ Add block</button>
+            </div></div>
+          </div><!-- /lesson B -->
+
+          <!-- Lesson C -->
+          <div class="lesson-accordion" id="cw-acc-1c">
+            <div class="lesson-acc-header" onclick="toggleAcc('cw-acc-1c')">
+              <span class="lesson-acc-tag">Lesson C</span>
+              <span class="lesson-acc-title">Lesson C — topic</span>
+              <span class="lesson-acc-chevron">▼</span>
+            </div>
+            <div class="lesson-acc-body"><div class="lesson-acc-inner">
+              <div class="lesson-meta-line">Grammar: · Vocabulary: · Pronunciation:</div>
+              <div class="lesson-placeholder">
+                <strong>Add lesson content</strong>
+                <p>Use the blocks below to add notes, texts, tasks, vocabulary, or links for this lesson.</p>
+              </div>
+              <div id="blocks-cw-acc-1c"></div>
+              <div class="block-picker" id="blockpicker-cw-acc-1c">
+                <button class="block-type-btn" onclick="addBlock('cw-acc-1c','note')">📝 Note</button>
+                <button class="block-type-btn" onclick="addBlock('cw-acc-1c','text')">📄 Text</button>
+                <button class="block-type-btn" onclick="addBlock('cw-acc-1c','image')">🖼️ Image</button>
+                <button class="block-type-btn" onclick="addBlock('cw-acc-1c','link')">🔗 Link</button>
+                <button class="block-type-btn" onclick="addBlock('cw-acc-1c','task')">✅ Tasks</button>
+                <button class="block-type-btn" onclick="addBlock('cw-acc-1c','vocab')">📋 Vocabulary</button>
+              </div>
+              <button class="btn-add-block" onclick="toggleBlockPicker('cw-acc-1c')">＋ Add block</button>
+            </div></div>
+          </div><!-- /lesson C -->
+
+          <!-- Lesson D -->
+          <div class="lesson-accordion" id="cw-acc-1d">
+            <div class="lesson-acc-header" onclick="toggleAcc('cw-acc-1d')">
+              <span class="lesson-acc-tag">Lesson D</span>
+              <span class="lesson-acc-title">Lesson D — topic</span>
+              <span class="lesson-acc-chevron">▼</span>
+            </div>
+            <div class="lesson-acc-body"><div class="lesson-acc-inner">
+              <div class="lesson-meta-line">Grammar: · Vocabulary: · Pronunciation:</div>
+              <div class="lesson-placeholder">
+                <strong>Add lesson content</strong>
+                <p>Use the blocks below to add notes, texts, tasks, vocabulary, or links for this lesson.</p>
+              </div>
+              <div id="blocks-cw-acc-1d"></div>
+              <div class="block-picker" id="blockpicker-cw-acc-1d">
+                <button class="block-type-btn" onclick="addBlock('cw-acc-1d','note')">📝 Note</button>
+                <button class="block-type-btn" onclick="addBlock('cw-acc-1d','text')">📄 Text</button>
+                <button class="block-type-btn" onclick="addBlock('cw-acc-1d','image')">🖼️ Image</button>
+                <button class="block-type-btn" onclick="addBlock('cw-acc-1d','link')">🔗 Link</button>
+                <button class="block-type-btn" onclick="addBlock('cw-acc-1d','task')">✅ Tasks</button>
+                <button class="block-type-btn" onclick="addBlock('cw-acc-1d','vocab')">📋 Vocabulary</button>
+              </div>
+              <button class="btn-add-block" onclick="toggleBlockPicker('cw-acc-1d')">＋ Add block</button>
+            </div></div>
+          </div><!-- /lesson D -->
+
+          <div id="blocks-cw-unit-1"></div>
+          <div class="block-picker" id="blockpicker-cw-unit-1">
+            <button class="block-type-btn" onclick="addBlock('cw-unit-1','note')">📝 Note</button>
+            <button class="block-type-btn" onclick="addBlock('cw-unit-1','text')">📄 Text</button>
+            <button class="block-type-btn" onclick="addBlock('cw-unit-1','image')">🖼️ Image</button>
+            <button class="block-type-btn" onclick="addBlock('cw-unit-1','link')">🔗 Link</button>
+            <button class="block-type-btn" onclick="addBlock('cw-unit-1','task')">✅ Tasks</button>
+            <button class="block-type-btn" onclick="addBlock('cw-unit-1','vocab')">📋 Vocabulary</button>
+          </div>
+          <button class="btn-add-block" onclick="toggleBlockPicker('cw-unit-1')">＋ Add block</button>
+        </div></div>
+      </div><!-- /cw-unit-1 -->
+
+      <!-- Unit 2 -->
+      <div class="unit-item" id="cw-unit-2">
+        <div class="unit-header" onclick="toggleUnit('cw-unit-2')">
+          <span class="unit-number">Unit 2</span>
+          <span class="unit-title-text">Unit 2</span>
+          <span class="unit-chevron">▼</span>
+        </div>
+        <div class="unit-body"><div class="unit-body-inner">
+          <div class="unit-notes-section">
+            <div class="unit-notes-row">
+              <div class="unit-notes-col">
+                <div class="unit-notes-label">📝 Notes</div>
+                <textarea class="unit-textarea" id="hwnotes-cw-2" placeholder="Notes from class…" oninput="saveAll()"></textarea>
+              </div>
+              <div class="unit-notes-col">
+                <div class="unit-notes-label">📖 Vocabulary</div>
+                <textarea class="unit-textarea" id="vocabnotes-cw-2" placeholder="New words, phrases, translations…" oninput="saveAll()"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="lesson-placeholder">
+            <strong>Lessons for Unit 2</strong>
+            <p>Add lesson blocks below, or use the + Add block button to get started.</p>
+          </div>
+          <div id="blocks-cw-unit-2"></div>
+          <div class="block-picker" id="blockpicker-cw-unit-2">
+            <button class="block-type-btn" onclick="addBlock('cw-unit-2','note')">📝 Note</button>
+            <button class="block-type-btn" onclick="addBlock('cw-unit-2','text')">📄 Text</button>
+            <button class="block-type-btn" onclick="addBlock('cw-unit-2','image')">🖼️ Image</button>
+            <button class="block-type-btn" onclick="addBlock('cw-unit-2','link')">🔗 Link</button>
+            <button class="block-type-btn" onclick="addBlock('cw-unit-2','task')">✅ Tasks</button>
+            <button class="block-type-btn" onclick="addBlock('cw-unit-2','vocab')">📋 Vocabulary</button>
+          </div>
+          <button class="btn-add-block" onclick="toggleBlockPicker('cw-unit-2')">＋ Add block</button>
+        </div></div>
+      </div><!-- /cw-unit-2 -->
+
+    </div><!-- /cwUnitsList -->
+  </div>
+</div><!-- /tab-classwork -->
+
+<!-- ══════════════════════════════════════ -->
+<!-- HOMEWORK TAB -->
+<!-- ══════════════════════════════════════ -->
+<div class="tab-page" id="tab-homework">
+  <div class="units-page">
+    <div class="units-page-header">
+      <h2><span>Homework</span> Units</h2>
+      <button class="btn-new-unit" onclick="openModal('hwunit')">＋ Add unit</button>
+    </div>
+    <div id="hwUnitsList">
+
+      <!-- Unit 1 -->
+      <div class="unit-item" id="hw-unit-1">
+        <div class="unit-header" onclick="toggleUnit('hw-unit-1')">
+          <span class="unit-number">Unit 1</span>
+          <span class="unit-title-text">Unit 1</span>
+          <span class="unit-chevron">▼</span>
+        </div>
+        <div class="unit-body"><div class="unit-body-inner">
+          <div class="unit-notes-section">
+            <div class="unit-notes-row">
+              <div class="unit-notes-col">
+                <div class="unit-notes-label">📝 Homework Notes</div>
+                <textarea class="unit-textarea" id="hwnotes-hw-1" placeholder="Notes…" oninput="saveAll()"></textarea>
+              </div>
+              <div class="unit-notes-col">
+                <div class="unit-notes-label">📖 Vocabulary</div>
+                <textarea class="unit-textarea" id="vocabnotes-hw-1" placeholder="New words…" oninput="saveAll()"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <ul class="simple-hw-list" id="hwlist-hw-unit-1"></ul>
+          <button class="btn-add-hw" onclick="showHwForm('hw-unit-1')">＋ Add task</button>
+          <div class="add-hw-form" id="hwform-hw-unit-1">
+            <div class="form-row">
+              <input type="text" class="inp-main" placeholder="Task…" id="hwtxt-hw-unit-1">
+              <input type="text" class="inp-pages" placeholder="p. 10" id="hwpages-hw-unit-1">
+            </div>
+            <div class="form-row"><input type="url" class="inp-url" placeholder="Link (optional)" id="hwurl-hw-unit-1"></div>
+            <div class="form-actions">
+              <button class="btn-save-hw" onclick="saveHw('hw-unit-1')">Save</button>
+              <button class="btn-cancel-hw" onclick="hideHwForm('hw-unit-1')">Cancel</button>
+            </div>
+          </div>
+
+          <div id="blocks-hw-unit-1"></div>
+          <div class="block-picker" id="blockpicker-hw-unit-1">
+            <button class="block-type-btn" onclick="addBlock('hw-unit-1','note')">📝 Note</button>
+            <button class="block-type-btn" onclick="addBlock('hw-unit-1','text')">📄 Text</button>
+            <button class="block-type-btn" onclick="addBlock('hw-unit-1','image')">🖼️ Image</button>
+            <button class="block-type-btn" onclick="addBlock('hw-unit-1','link')">🔗 Link</button>
+            <button class="block-type-btn" onclick="addBlock('hw-unit-1','task')">✅ Tasks</button>
+            <button class="block-type-btn" onclick="addBlock('hw-unit-1','vocab')">📋 Vocabulary</button>
+          </div>
+          <button class="btn-add-block" onclick="toggleBlockPicker('hw-unit-1')">＋ Add block</button>
+        </div></div>
+      </div><!-- /hw-unit-1 -->
+
+      <!-- Unit 2 -->
+      <div class="unit-item" id="hw-unit-2">
+        <div class="unit-header" onclick="toggleUnit('hw-unit-2')">
+          <span class="unit-number">Unit 2</span>
+          <span class="unit-title-text">Unit 2</span>
+          <span class="unit-chevron">▼</span>
+        </div>
+        <div class="unit-body"><div class="unit-body-inner">
+          <div class="unit-notes-section">
+            <div class="unit-notes-row">
+              <div class="unit-notes-col">
+                <div class="unit-notes-label">📝 Homework Notes</div>
+                <textarea class="unit-textarea" id="hwnotes-hw-2" placeholder="Notes…" oninput="saveAll()"></textarea>
+              </div>
+              <div class="unit-notes-col">
+                <div class="unit-notes-label">📖 Vocabulary</div>
+                <textarea class="unit-textarea" id="vocabnotes-hw-2" placeholder="New words…" oninput="saveAll()"></textarea>
+              </div>
+            </div>
+          </div>
+          <ul class="simple-hw-list" id="hwlist-hw-unit-2"></ul>
+          <button class="btn-add-hw" onclick="showHwForm('hw-unit-2')">＋ Add task</button>
+          <div class="add-hw-form" id="hwform-hw-unit-2">
+            <div class="form-row">
+              <input type="text" class="inp-main" placeholder="Task…" id="hwtxt-hw-unit-2">
+              <input type="text" class="inp-pages" placeholder="p. 10" id="hwpages-hw-unit-2">
+            </div>
+            <div class="form-actions">
+              <button class="btn-save-hw" onclick="saveHw('hw-unit-2')">Save</button>
+              <button class="btn-cancel-hw" onclick="hideHwForm('hw-unit-2')">Cancel</button>
+            </div>
+          </div>
+          <div id="blocks-hw-unit-2"></div>
+          <div class="block-picker" id="blockpicker-hw-unit-2">
+            <button class="block-type-btn" onclick="addBlock('hw-unit-2','note')">📝 Note</button>
+            <button class="block-type-btn" onclick="addBlock('hw-unit-2','text')">📄 Text</button>
+            <button class="block-type-btn" onclick="addBlock('hw-unit-2','image')">🖼️ Image</button>
+            <button class="block-type-btn" onclick="addBlock('hw-unit-2','link')">🔗 Link</button>
+            <button class="block-type-btn" onclick="addBlock('hw-unit-2','task')">✅ Tasks</button>
+            <button class="block-type-btn" onclick="addBlock('hw-unit-2','vocab')">📋 Vocabulary</button>
+          </div>
+          <button class="btn-add-block" onclick="toggleBlockPicker('hw-unit-2')">＋ Add block</button>
+        </div></div>
+      </div><!-- /hw-unit-2 -->
+
+    </div><!-- /hwUnitsList -->
+  </div>
+</div><!-- /tab-homework -->
+
+<!-- ══════════════════════════════════════ -->
+<!-- VOCABULARY TAB -->
+<!-- ══════════════════════════════════════ -->
+<div class="tab-page" id="tab-vocabulary">
+  <div class="units-page">
+    <div class="units-page-header">
+      <h2><span>Vocabulary</span></h2>
+      <button class="btn-new-unit" onclick="openModal('vocabunit')">＋ Add unit</button>
+    </div>
+    <div id="vocabUnitsList">
+
+      <!-- Unit 1 -->
+      <div class="unit-item" id="vocab-unit-1">
+        <div class="unit-header" onclick="toggleUnit('vocab-unit-1')">
+          <span class="unit-number">Unit 1</span>
+          <span class="unit-title-text">Unit 1</span>
+          <span class="unit-chevron">▼</span>
+        </div>
+        <div class="unit-body"><div class="unit-body-inner">
+          <div class="unit-notes-label" style="margin-bottom:.4rem">Topics: —</div>
+          <textarea class="unit-textarea" id="vocab-u1" placeholder="Word — translation&#10;e.g. to miss — скучать" rows="10" oninput="saveAll()" style="min-height:200px;font-family:monospace;font-size:.82rem"></textarea>
+          <div style="margin-top:.7rem">
+            <div class="unit-notes-label" style="margin-bottom:.35rem">🔗 Links & files</div>
+            <ul class="simple-hw-list" id="vocablinks-unit-1"></ul>
+            <button class="btn-add-hw" onclick="showHwForm('vocablink-unit-1')">＋ Add link</button>
+            <div class="add-hw-form" id="hwform-vocablink-unit-1">
+              <div class="form-row"><input type="text" class="inp-main" placeholder="Title (e.g. Quizlet Unit 1)" id="hwtxt-vocablink-unit-1"></div>
+              <div class="form-row"><input type="url" class="inp-url" placeholder="https://..." id="hwpages-vocablink-unit-1" style="flex:1"></div>
+              <div class="form-actions">
+                <button class="btn-save-hw" onclick="saveLinkItem('vocablink-unit-1','vocablinks-unit-1')">Save</button>
+                <button class="btn-cancel-hw" onclick="hideHwForm('vocablink-unit-1')">Cancel</button>
+              </div>
+            </div>
+          </div>
+          <div id="blocks-vocab-unit-1"></div>
+          <div class="block-picker" id="blockpicker-vocab-unit-1">
+            <button class="block-type-btn" onclick="addBlock('vocab-unit-1','note')">📝 Note</button>
+            <button class="block-type-btn" onclick="addBlock('vocab-unit-1','text')">📄 Text</button>
+            <button class="block-type-btn" onclick="addBlock('vocab-unit-1','image')">🖼️ Image</button>
+            <button class="block-type-btn" onclick="addBlock('vocab-unit-1','link')">🔗 Link</button>
+            <button class="block-type-btn" onclick="addBlock('vocab-unit-1','task')">✅ Tasks</button>
+            <button class="block-type-btn" onclick="addBlock('vocab-unit-1','vocab')">📋 Vocabulary</button>
+          </div>
+          <button class="btn-add-block" onclick="toggleBlockPicker('vocab-unit-1')">＋ Add block</button>
+        </div></div>
+      </div>
+
+      <!-- Unit 2 -->
+      <div class="unit-item" id="vocab-unit-2">
+        <div class="unit-header" onclick="toggleUnit('vocab-unit-2')">
+          <span class="unit-number">Unit 2</span>
+          <span class="unit-title-text">Unit 2</span>
+          <span class="unit-chevron">▼</span>
+        </div>
+        <div class="unit-body"><div class="unit-body-inner">
+          <div class="unit-notes-label" style="margin-bottom:.4rem">Topics: —</div>
+          <textarea class="unit-textarea" id="vocab-u2" placeholder="Word — translation&#10;e.g. fur — мех" rows="10" oninput="saveAll()" style="min-height:200px;font-family:monospace;font-size:.82rem"></textarea>
+          <div style="margin-top:.7rem">
+            <div class="unit-notes-label" style="margin-bottom:.35rem">🔗 Links & files</div>
+            <ul class="simple-hw-list" id="vocablinks-unit-2"></ul>
+            <button class="btn-add-hw" onclick="showHwForm('vocablink-unit-2')">＋ Add link</button>
+            <div class="add-hw-form" id="hwform-vocablink-unit-2">
+              <div class="form-row"><input type="text" class="inp-main" placeholder="Title (e.g. Quizlet Unit 2)" id="hwtxt-vocablink-unit-2"></div>
+              <div class="form-row"><input type="url" class="inp-url" placeholder="https://..." id="hwpages-vocablink-unit-2" style="flex:1"></div>
+              <div class="form-actions">
+                <button class="btn-save-hw" onclick="saveLinkItem('vocablink-unit-2','vocablinks-unit-2')">Save</button>
+                <button class="btn-cancel-hw" onclick="hideHwForm('vocablink-unit-2')">Cancel</button>
+              </div>
+            </div>
+          </div>
+          <div id="blocks-vocab-unit-2"></div>
+          <div class="block-picker" id="blockpicker-vocab-unit-2">
+            <button class="block-type-btn" onclick="addBlock('vocab-unit-2','note')">📝 Note</button>
+            <button class="block-type-btn" onclick="addBlock('vocab-unit-2','text')">📄 Text</button>
+            <button class="block-type-btn" onclick="addBlock('vocab-unit-2','image')">🖼️ Image</button>
+            <button class="block-type-btn" onclick="addBlock('vocab-unit-2','link')">🔗 Link</button>
+            <button class="block-type-btn" onclick="addBlock('vocab-unit-2','task')">✅ Tasks</button>
+            <button class="block-type-btn" onclick="addBlock('vocab-unit-2','vocab')">📋 Vocabulary</button>
+          </div>
+          <button class="btn-add-block" onclick="toggleBlockPicker('vocab-unit-2')">＋ Add block</button>
+        </div></div>
+      </div>
+
+    </div><!-- /vocabUnitsList -->
+  </div>
+</div><!-- /tab-vocabulary -->
+
+<!-- ══════════════════════════════════════ -->
+<!-- REVIEW TAB -->
+<!-- ══════════════════════════════════════ -->
+<div class="tab-page" id="tab-review">
+  <div class="units-page">
+    <div class="units-page-header">
+      <h2><span>Review</span> Notes</h2>
+      <button class="btn-new-unit" onclick="openModal('reviewunit')">＋ Add unit</button>
+    </div>
+    <div id="reviewUnitsList">
+
+      <!-- Unit 1 -->
+      <div class="unit-item" id="review-unit-1">
+        <div class="unit-header" onclick="toggleUnit('review-unit-1')">
+          <span class="unit-number">Unit 1</span>
+          <span class="unit-title-text">Unit 1 — Review</span>
+          <span class="unit-chevron">▼</span>
+        </div>
+        <div class="unit-body"><div class="unit-body-inner">
+          <div class="unit-notes-row" style="margin-bottom:.8rem">
+            <div class="unit-notes-col">
+              <div class="unit-notes-label">✅ What I know well</div>
+              <textarea class="unit-textarea" id="review-u1-know" placeholder="Topics I'm confident with…" oninput="saveAll()"></textarea>
+            </div>
+            <div class="unit-notes-col">
+              <div class="unit-notes-label">🔁 What to practise more</div>
+              <textarea class="unit-textarea" id="review-u1-practise" placeholder="Topics to revise…" oninput="saveAll()"></textarea>
+            </div>
+          </div>
+          <div class="unit-notes-label" style="margin-bottom:.35rem">📝 General notes</div>
+          <textarea class="unit-textarea" id="review-u1-notes" placeholder="Any other notes…" oninput="saveAll()"></textarea>
+          <div style="margin-top:.7rem">
+            <div class="unit-notes-label" style="margin-bottom:.35rem">🔗 Links & files</div>
+            <ul class="simple-hw-list" id="reviewlinks-unit-1"></ul>
+            <button class="btn-add-hw" onclick="showHwForm('reviewlink-unit-1')">＋ Add link</button>
+            <div class="add-hw-form" id="hwform-reviewlink-unit-1">
+              <div class="form-row"><input type="text" class="inp-main" placeholder="Title (e.g. Review PDF)" id="hwtxt-reviewlink-unit-1"></div>
+              <div class="form-row"><input type="url" class="inp-url" placeholder="https://..." id="hwpages-reviewlink-unit-1" style="flex:1"></div>
+              <div class="form-actions">
+                <button class="btn-save-hw" onclick="saveLinkItem('reviewlink-unit-1','reviewlinks-unit-1')">Save</button>
+                <button class="btn-cancel-hw" onclick="hideHwForm('reviewlink-unit-1')">Cancel</button>
+              </div>
+            </div>
+          </div>
+          <div id="blocks-review-unit-1"></div>
+          <div class="block-picker" id="blockpicker-review-unit-1">
+            <button class="block-type-btn" onclick="addBlock('review-unit-1','note')">📝 Note</button>
+            <button class="block-type-btn" onclick="addBlock('review-unit-1','text')">📄 Text</button>
+            <button class="block-type-btn" onclick="addBlock('review-unit-1','image')">🖼️ Image</button>
+            <button class="block-type-btn" onclick="addBlock('review-unit-1','link')">🔗 Link</button>
+            <button class="block-type-btn" onclick="addBlock('review-unit-1','task')">✅ Tasks</button>
+            <button class="block-type-btn" onclick="addBlock('review-unit-1','vocab')">📋 Vocabulary</button>
+          </div>
+          <button class="btn-add-block" onclick="toggleBlockPicker('review-unit-1')">＋ Add block</button>
+        </div></div>
+      </div>
+
+      <!-- Unit 2 -->
+      <div class="unit-item" id="review-unit-2">
+        <div class="unit-header" onclick="toggleUnit('review-unit-2')">
+          <span class="unit-number">Unit 2</span>
+          <span class="unit-title-text">Unit 2 — Review</span>
+          <span class="unit-chevron">▼</span>
+        </div>
+        <div class="unit-body"><div class="unit-body-inner">
+          <div class="unit-notes-row" style="margin-bottom:.8rem">
+            <div class="unit-notes-col">
+              <div class="unit-notes-label">✅ What I know well</div>
+              <textarea class="unit-textarea" id="review-u2-know" placeholder="Topics I'm confident with…" oninput="saveAll()"></textarea>
+            </div>
+            <div class="unit-notes-col">
+              <div class="unit-notes-label">🔁 What to practise more</div>
+              <textarea class="unit-textarea" id="review-u2-practise" placeholder="Topics to revise…" oninput="saveAll()"></textarea>
+            </div>
+          </div>
+          <div class="unit-notes-label" style="margin-bottom:.35rem">📝 General notes</div>
+          <textarea class="unit-textarea" id="review-u2-notes" placeholder="Any other notes…" oninput="saveAll()"></textarea>
+          <div style="margin-top:.7rem">
+            <div class="unit-notes-label" style="margin-bottom:.35rem">🔗 Links & files</div>
+            <ul class="simple-hw-list" id="reviewlinks-unit-2"></ul>
+            <button class="btn-add-hw" onclick="showHwForm('reviewlink-unit-2')">＋ Add link</button>
+            <div class="add-hw-form" id="hwform-reviewlink-unit-2">
+              <div class="form-row"><input type="text" class="inp-main" placeholder="Title" id="hwtxt-reviewlink-unit-2"></div>
+              <div class="form-row"><input type="url" class="inp-url" placeholder="https://..." id="hwpages-reviewlink-unit-2" style="flex:1"></div>
+              <div class="form-actions">
+                <button class="btn-save-hw" onclick="saveLinkItem('reviewlink-unit-2','reviewlinks-unit-2')">Save</button>
+                <button class="btn-cancel-hw" onclick="hideHwForm('reviewlink-unit-2')">Cancel</button>
+              </div>
+            </div>
+          </div>
+          <div id="blocks-review-unit-2"></div>
+          <div class="block-picker" id="blockpicker-review-unit-2">
+            <button class="block-type-btn" onclick="addBlock('review-unit-2','note')">📝 Note</button>
+            <button class="block-type-btn" onclick="addBlock('review-unit-2','text')">📄 Text</button>
+            <button class="block-type-btn" onclick="addBlock('review-unit-2','image')">🖼️ Image</button>
+            <button class="block-type-btn" onclick="addBlock('review-unit-2','link')">🔗 Link</button>
+            <button class="block-type-btn" onclick="addBlock('review-unit-2','task')">✅ Tasks</button>
+            <button class="block-type-btn" onclick="addBlock('review-unit-2','vocab')">📋 Vocabulary</button>
+          </div>
+          <button class="btn-add-block" onclick="toggleBlockPicker('review-unit-2')">＋ Add block</button>
+        </div></div>
+      </div>
+
+    </div><!-- /reviewUnitsList -->
+  </div>
+</div><!-- /tab-review -->
+
+<!-- ══════════════════════════════════════ -->
+<!-- MATERIALS TAB -->
+<!-- ══════════════════════════════════════ -->
+<div class="tab-page" id="tab-materials">
+  <div class="materials-page">
+    <div class="materials-header"><h2>Course <span>Materials</span></h2></div>
+    <div class="grid" id="cardGrid">
+      <a class="card rose" href="https://drive.google.com/file/d/1RSR2TPMWdMaMCUVanQZIlijYlVBGpXfW/view?usp=sharing" target="_blank" rel="noopener">
+        <span class="card-icon">📖</span>
+        <div class="card-label">Textbook</div>
+        <h3>Student's Book</h3>
+        <p>Open the main coursebook PDF.</p>
+      </a>
+      <a class="card sage" href="https://drive.google.com/file/d/1v7VZqh568rOfS7c4ZGxGLv-vRLRXm3G1/view?usp=sharing" target="_blank" rel="noopener">
+        <span class="card-icon">📝</span>
+        <div class="card-label">Practice</div>
+        <h3>Workbook</h3>
+        <p>Exercises and practice tasks.</p>
+      </a>
+      <a class="card blue" href="https://drive.google.com/drive/folders/1bN_rbtwBGmqe6TNKThIZ7cambdJYjA0Z" target="_blank" rel="noopener">
+        <span class="card-icon">🔊</span>
+        <div class="card-label">Audio</div>
+        <h3>Student's Book Audio</h3>
+        <p>Listening tracks for the SB.</p>
+      </a>
+      <a class="card gold" href="https://drive.google.com/drive/folders/1licmOYvZOchR4hMZGerkGQTsMHdT0PF3" target="_blank" rel="noopener">
+        <span class="card-icon">🎧</span>
+        <div class="card-label">Audio</div>
+        <h3>Workbook Audio</h3>
+        <p>Listening tracks for the WB.</p>
+      </a>
+      <a class="card sage" href="https://drive.google.com/file/d/1MgvAdO4Ranh403cXHfRfRBkqrYMBSnyg/view?usp=sharing" target="_blank" rel="noopener">
+        <span class="card-icon">📚</span>
+        <div class="card-label">Vocabulary</div>
+        <h3>Vocabulary Builder</h3>
+        <p>Word lists and vocab practice.</p>
+      </a>
+      <a class="card gold" href="https://docs.google.com/spreadsheets/d/1-MYEOo8CiV9HQToAXaWX4ICLQumNi7r1-ZiBAeIgC0E/edit?usp=sharing" target="_blank" rel="noopener">
+        <span class="card-icon">💳</span>
+        <div class="card-label">Admin</div>
+        <h3>Payments</h3>
+        <p>Payment tracking spreadsheet.</p>
+      </a>
+      <a class="card board" href="https://miro.com/welcomeonboard/TVFwTVoxM3RSb09IejNORHdPVVAwVS95czBUbktZcjR3OStPbW1IN0lYUG9JdWIvcXg0T0NaR3p1RnUrbnI3WHFMWTg3QS9uZkRSZFU0ZUUrSVZOdjNrNVdaZFN4cnJ0THd4R1p2Qnh2M0lDQ1pWazVDNk1UVU9VOEJVN1JEbGF3VHhHVHd5UWtSM1BidUtUYmxycDRnPT0hdjE=?share_link_id=37157548549" target="_blank" rel="noopener">
+        <div class="board-text">
+          <div class="card-label">Interactive</div>
+          <h3>Miro Board</h3>
+          <p>Our shared lesson board.</p>
+        </div>
+        <div class="board-visual">🗂️</div>
+      </a>
+    </div>
+  </div>
+  <div class="add-section">
+    <button class="add-btn" onclick="openModal('resource')"><span style="font-size:1.1rem">＋</span> Add a resource</button>
+  </div>
+</div><!-- /tab-materials -->
+
+<footer>Made with care &nbsp;·&nbsp; ✦</footer>
+
+<!-- Teacher Mode button -->
+<button class="teacher-mode-btn" id="teacherBtn" onclick="toggleTeacherMode()">✏️ Teacher Mode</button>
+<div class="teacher-mode-bar" id="teacherBar">
+  <span>✏️ Teacher Mode — click any text to edit · add content to lesson blocks</span>
+  <button onclick="toggleTeacherMode()" style="margin-left:auto;background:var(--rose);color:white;border:none;border-radius:3px;padding:.3rem .8rem;font-family:'DM Sans',sans-serif;font-size:.73rem;cursor:pointer;">✓ Done editing</button>
+</div>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="modal-resource">
+  <div class="modal">
+    <button class="close-modal" onclick="closeModal('resource')">✕</button>
+    <h3>Add a Resource</h3>
+    <label>Title</label><input type="text" id="rTitle" placeholder="e.g. Grammar Reference">
+    <label>URL</label><input type="url" id="rUrl" placeholder="https://...">
+    <label>Description</label><input type="text" id="rDesc" placeholder="Short description">
+    <label>Category</label>
+    <select id="rColor">
+      <option value="rose">📖 Textbook</option>
+      <option value="sage">📝 Practice</option>
+      <option value="gold">🎧 Audio</option>
+      <option value="blue">🔗 Other</option>
+    </select>
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" onclick="closeModal('resource')">Cancel</button>
+      <button class="btn-modal-add" onclick="addCard()">Add →</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-vocabunit">
+  <div class="modal">
+    <button class="close-modal" onclick="closeModal('vocabunit')">✕</button>
+    <h3>New Vocabulary Unit</h3>
+    <label>Unit number</label><input type="text" id="vuNum" placeholder="3">
+    <label>Unit title</label><input type="text" id="vuName" placeholder="e.g. City Life">
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" onclick="closeModal('vocabunit')">Cancel</button>
+      <button class="btn-modal-add" onclick="addVocabUnit()">Add →</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-reviewunit">
+  <div class="modal">
+    <button class="close-modal" onclick="closeModal('reviewunit')">✕</button>
+    <h3>New Review Unit</h3>
+    <label>Unit number</label><input type="text" id="ruNum" placeholder="3">
+    <label>Unit title</label><input type="text" id="ruName" placeholder="e.g. City Life">
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" onclick="closeModal('reviewunit')">Cancel</button>
+      <button class="btn-modal-add" onclick="addReviewUnit()">Add →</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-cunit">
+  <div class="modal">
+    <button class="close-modal" onclick="closeModal('cunit')">✕</button>
+    <h3>New Classwork Unit</h3>
+    <label>Unit number</label><input type="text" id="cuNum" placeholder="3">
+    <label>Unit title</label><input type="text" id="cuName" placeholder="e.g. Travel">
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" onclick="closeModal('cunit')">Cancel</button>
+      <button class="btn-modal-add" onclick="addUnit('cw','cwUnitsList','cuNum','cuName')">Add →</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-hwunit">
+  <div class="modal">
+    <button class="close-modal" onclick="closeModal('hwunit')">✕</button>
+    <h3>New Homework Unit</h3>
+    <label>Unit number</label><input type="text" id="hwuNum" placeholder="3">
+    <label>Unit title</label><input type="text" id="hwuName" placeholder="e.g. People">
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" onclick="closeModal('hwunit')">Cancel</button>
+      <button class="btn-modal-add" onclick="addUnit('hw','hwUnitsList','hwuNum','hwuName')">Add →</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+// ─── TABS ───
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    btn.classList.add('active');
+  });
+});
+
+// ─── ACCORDIONS ───
+function toggleUnit(id){ document.getElementById(id).classList.toggle('open'); }
+function toggleAcc(id){ document.getElementById(id).classList.toggle('open'); }
+
+// ─── GLOBAL NOTES ───
+function toggleGlobalNotes(){
+  document.querySelector('.global-notes-wrap').classList.toggle('open');
+  saveAll();
+}
+
+// ─── WORD COUNT ───
+function countWords(el, id){
+  const n = el.value.trim().split(/\s+/).filter(Boolean).length;
+  document.getElementById(id).textContent = n + ' words';
+}
+
+
+// ─── FIREBASE ───
+function initFirebase(){
+  try {
+    if(typeof firebase === 'undefined'){ showSynced('⚠️ No connection'); return; }
+    const firebaseConfig = {
+      apiKey: "AIzaSyCFDL2atLoLAtmf9_Zxptki3eduTUdlO2c",
+      authDomain: "cate-portal.firebaseapp.com",
+      databaseURL: "https://cate-portal-default-rtdb.firebaseio.com",
+      projectId: "cate-portal",
+      storageBucket: "cate-portal.firebasestorage.app",
+      messagingSenderId: "926076456940",
+      appId: "1:926076456940:web:fe5b8d48d07d20c3f5bac9"
+    };
+    if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    window._db = firebase.database();
+    // Use student name as key (set after name is loaded)
+    const name = 'template';
+    const safeKey = name.toLowerCase().replace(/[^a-z0-9]/g,'_');
+    window._dbRef = _db.ref('students/' + safeKey + '/progress');
+    _dbRef.once('value').then(snap => {
+      const state = snap.val();
+      if(state) applyState(state);
+      _dbRef.on('value', snap => {
+        const s = snap.val();
+        if(s && !window._mySave) { applyState(s); showSynced('🔄 Synced'); }
+        window._mySave = false;
+      });
+    });
+    showSynced('☁️ Connected');
+  } catch(e) {
+    showSynced('⚠️ Error');
+    console.error(e);
+  }
+}
+
+let saveTimer = null;
+
+function collectState(){
+  const state = {};
+  document.querySelectorAll('input[id]:not([type="file"])').forEach(inp => {
+    if(inp.id) state[inp.id] = inp.value;
+  });
+  document.querySelectorAll('textarea[id]').forEach(ta => {
+    if(ta.id) state[ta.id] = ta.value;
+  });
+  document.querySelectorAll('input[type="checkbox"][id]').forEach(cb => {
+    state[cb.id] = cb.checked;
+  });
+  // open/closed state
+  document.querySelectorAll('.unit-item[id], .lesson-accordion[id], .global-notes-wrap').forEach(el => {
+    state['open_' + (el.id || 'globalNotes')] = el.classList.contains('open');
+  });
+
+  return state;
+}
+
+function applyState(state){
+  const focused = document.activeElement;
+  document.querySelectorAll('input[id]:not([type="file"])').forEach(inp => {
+    if(inp.id && state[inp.id] !== undefined && inp !== focused) inp.value = state[inp.id];
+  });
+  document.querySelectorAll('textarea[id]').forEach(ta => {
+    if(ta.id && state[ta.id] !== undefined && ta !== focused) ta.value = state[ta.id];
+  });
+  document.querySelectorAll('input[type="checkbox"][id]').forEach(cb => {
+    if(state[cb.id] !== undefined) cb.checked = state[cb.id];
+  });
+  document.querySelectorAll('.unit-item[id], .lesson-accordion[id]').forEach(el => {
+    if(state['open_' + el.id] === true) el.classList.add('open');
+    else if(state['open_' + el.id] === false) el.classList.remove('open');
+  });
+  if(state['open_globalNotes']) document.querySelector('.global-notes-wrap')?.classList.add('open');
+}
+
+function saveAll(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    const state = collectState();
+    localStorage.setItem('portal_progress', JSON.stringify(state));
+    if(window._dbRef){
+      window._mySave = true;
+      _dbRef.set(state)
+        .then(() => showSynced('☁️ Saved'))
+        .catch(() => { window._mySave = false; showSynced('⚠️ Offline'); });
+    } else {
+      showSynced('💾 Saved locally');
+    }
+  }, 600);
+}
+
+function loadAll(){
+  const raw = localStorage.getItem('portal_progress');
+  if(raw){ try{ applyState(JSON.parse(raw)); } catch{} }
+}
+
+function showSynced(msg){
+  const bar = document.getElementById('saveBar');
+  const status = bar.querySelector('.save-status');
+  if(status) status.innerHTML = msg;
+  bar.classList.add('show');
+  clearTimeout(window._saveBarTimer);
+  window._saveBarTimer = setTimeout(() => bar.classList.remove('show'), 2500);
+}
+
+document.addEventListener('input', e => {
+  if(e.target.matches('input:not([type="file"]),textarea')) saveAll();
+});
+document.addEventListener('change', e => {
+  if(e.target.matches('input[type="checkbox"]')) saveAll();
+});
+
+// ─── HW TASKS ───
+function showHwForm(uid){
+  const f = document.getElementById('hwform-' + uid);
+  if(f){ f.classList.add('visible'); const t = document.getElementById('hwtxt-' + uid); if(t) t.focus(); }
+}
+function hideHwForm(uid){ const f = document.getElementById('hwform-' + uid); if(f) f.classList.remove('visible'); }
+
+function saveHw(uid){
+  const txt = document.getElementById('hwtxt-' + uid)?.value.trim();
+  const pages = document.getElementById('hwpages-' + uid)?.value.trim();
+  if(!txt) return;
+  const list = document.getElementById('hwlist-' + uid);
+  if(!list) return;
+  const li = document.createElement('li');
+  const id = 'hwi-' + Date.now(); li.id = id;
+  li.innerHTML = `<div class="hw-chk" onclick="toggleHwItem('${id}')"></div><span class="hw-txt">${txt}</span>${pages ? `<span style="font-size:.7rem;color:var(--muted);background:rgba(26,20,16,.06);padding:.1rem .4rem;border-radius:2px;white-space:nowrap;margin-left:.3rem">${pages}</span>` : ''}<button onclick="this.closest('li').remove();saveAll()" style="background:none;border:none;cursor:pointer;color:#c0b4aa;font-size:.72rem;margin-left:auto">✕</button>`;
+  list.appendChild(li);
+  document.getElementById('hwtxt-' + uid).value = '';
+  if(document.getElementById('hwpages-' + uid)) document.getElementById('hwpages-' + uid).value = '';
+  hideHwForm(uid);
+  const unitEl = document.getElementById(uid); if(unitEl) unitEl.classList.add('open');
+  saveAll();
+}
+
+function toggleHwItem(id){
+  const li = document.getElementById(id);
+  const chk = li.querySelector('.hw-chk'); const txt = li.querySelector('.hw-txt');
+  const done = chk.classList.toggle('done');
+  chk.textContent = done ? '✓' : '';
+  txt.classList.toggle('done', done);
+  saveAll();
+}
+
+function saveLinkItem(formId, listId){
+  const title = document.getElementById('hwtxt-' + formId)?.value.trim();
+  const url   = document.getElementById('hwpages-' + formId)?.value.trim();
+  if(!title) return;
+  const list = document.getElementById(listId);
+  if(!list) return;
+  const li = document.createElement('li');
+  li.innerHTML = `<div class="hw-chk" style="border-color:var(--sage);background:var(--sage);color:white;font-size:.65rem;cursor:default">↗</div><span class="hw-txt">${url ? `<a href="${url}" target="_blank" style="color:var(--rose);text-decoration:none">${title}</a>` : title}</span><button onclick="this.closest('li').remove();saveAll()" style="background:none;border:none;cursor:pointer;color:#c0b4aa;font-size:.72rem;margin-left:auto">✕</button>`;
+  list.appendChild(li);
+  document.getElementById('hwtxt-' + formId).value = '';
+  document.getElementById('hwpages-' + formId).value = '';
+  hideHwForm(formId);
+  saveAll();
+}
+
+// ─── DYNAMIC UNITS ───
+function addUnit(prefix, listId, numId, nameId){
+  const num = document.getElementById(numId).value.trim();
+  const name = document.getElementById(nameId).value.trim();
+  if(!num){ alert('Please enter a unit number.'); return; }
+  const uid = prefix + '-unit-' + num.replace(/\s+/g,'-');
+  if(document.getElementById(uid)){ alert('Unit ' + num + ' already exists.'); return; }
+  const lbl = prefix === 'cw' ? 'Add classwork' : 'Add task';
+  const div = document.createElement('div'); div.className = 'unit-item'; div.id = uid;
+  div.style.cssText = 'opacity:0;transform:translateY(12px)';
+  div.innerHTML = `<div class="unit-header" onclick="toggleUnit('${uid}')"><span class="unit-number">Unit ${num}</span><span class="unit-title-text">${name||'—'}</span><span class="unit-chevron">▼</span></div><div class="unit-body"><div class="unit-body-inner"><div class="unit-notes-section"><div class="unit-notes-row"><div class="unit-notes-col"><div class="unit-notes-label">📝 Notes</div><textarea class="unit-textarea" id="notes-${uid}" placeholder="Notes…" oninput="saveAll()"></textarea></div><div class="unit-notes-col"><div class="unit-notes-label">📖 Vocabulary</div><textarea class="unit-textarea" id="vocab-${uid}" placeholder="New words…" oninput="saveAll()"></textarea></div></div></div><ul class="simple-hw-list" id="hwlist-${uid}"></ul><button class="btn-add-hw" onclick="showHwForm('${uid}')">＋ ${lbl}</button><div class="add-hw-form" id="hwform-${uid}"><div class="form-row"><input type="text" class="inp-main" placeholder="Task…" id="hwtxt-${uid}"><input type="text" class="inp-pages" placeholder="p. 10" id="hwpages-${uid}"></div><div class="form-actions"><button class="btn-save-hw" onclick="saveHw('${uid}')">Save</button><button class="btn-cancel-hw" onclick="hideHwForm('${uid}')">Cancel</button></div></div><div id="blocks-${uid}"></div><div class="block-picker" id="blockpicker-${uid}"><button class="block-type-btn" onclick="addBlock('${uid}','note')">📝 Note</button><button class="block-type-btn" onclick="addBlock('${uid}','text')">📄 Text</button><button class="block-type-btn" onclick="addBlock('${uid}','image')">🖼️ Image</button><button class="block-type-btn" onclick="addBlock('${uid}','link')">🔗 Link</button><button class="block-type-btn" onclick="addBlock('${uid}','task')">✅ Tasks</button><button class="block-type-btn" onclick="addBlock('${uid}','vocab')">📋 Vocabulary</button></div><button class="btn-add-block" onclick="toggleBlockPicker('${uid}')">＋ Add block</button></div></div>`;
+  document.getElementById(listId).appendChild(div);
+  requestAnimationFrame(() => { div.style.transition = 'opacity .35s ease,transform .35s ease'; div.style.opacity = '1'; div.style.transform = 'translateY(0)'; });
+  document.getElementById(numId).value = ''; document.getElementById(nameId).value = '';
+  closeModal(prefix === 'cw' ? 'cunit' : 'hwunit');
+}
+
+// ─── VOCAB UNITS ───
+function addVocabUnit(){
+  const num = document.getElementById('vuNum').value.trim();
+  const name = document.getElementById('vuName').value.trim();
+  if(!num){ alert('Please enter a unit number.'); return; }
+  const uid = 'vocab-unit-' + num;
+  if(document.getElementById(uid)){ alert('Unit ' + num + ' already exists.'); return; }
+  const div = document.createElement('div'); div.className = 'unit-item'; div.id = uid;
+  div.style.cssText = 'opacity:0;transform:translateY(12px)';
+  const lid = 'vocablinks-unit-' + num; const fid = 'vocablink-unit-' + num;
+  div.innerHTML = `<div class="unit-header" onclick="toggleUnit('${uid}')"><span class="unit-number">Unit ${num}</span><span class="unit-title-text">${name||'—'}</span><span class="unit-chevron">▼</span></div><div class="unit-body"><div class="unit-body-inner"><textarea class="unit-textarea" id="vocab-u${num}" placeholder="Word — translation" rows="8" oninput="saveAll()" style="min-height:160px;font-family:monospace;font-size:.82rem"></textarea><div style="margin-top:.7rem"><div class="unit-notes-label" style="margin-bottom:.35rem">🔗 Links &amp; files</div><ul class="simple-hw-list" id="${lid}"></ul><button class="btn-add-hw" onclick="showHwForm('${fid}')">＋ Add link</button><div class="add-hw-form" id="hwform-${fid}"><div class="form-row"><input type="text" class="inp-main" placeholder="Title" id="hwtxt-${fid}"></div><div class="form-row"><input type="url" class="inp-url" placeholder="https://..." id="hwpages-${fid}" style="flex:1"></div><div class="form-actions"><button class="btn-save-hw" onclick="saveLinkItem('${fid}','${lid}')">Save</button><button class="btn-cancel-hw" onclick="hideHwForm('${fid}')">Cancel</button></div></div></div></div></div>`;
+  document.getElementById('vocabUnitsList').appendChild(div);
+  requestAnimationFrame(() => { div.style.transition = 'opacity .35s ease,transform .35s ease'; div.style.opacity = '1'; div.style.transform = 'translateY(0)'; });
+  document.getElementById('vuNum').value = ''; document.getElementById('vuName').value = '';
+  closeModal('vocabunit');
+}
+
+// ─── REVIEW UNITS ───
+function addReviewUnit(){
+  const num = document.getElementById('ruNum').value.trim();
+  const name = document.getElementById('ruName').value.trim();
+  if(!num){ alert('Please enter a unit number.'); return; }
+  const uid = 'review-unit-' + num;
+  if(document.getElementById(uid)){ alert('Unit ' + num + ' already exists.'); return; }
+  const div = document.createElement('div'); div.className = 'unit-item'; div.id = uid;
+  div.style.cssText = 'opacity:0;transform:translateY(12px)';
+  const lid = 'reviewlinks-unit-' + num; const fid = 'reviewlink-unit-' + num;
+  div.innerHTML = `<div class="unit-header" onclick="toggleUnit('${uid}')"><span class="unit-number">Unit ${num}</span><span class="unit-title-text">${name||'—'} — Review</span><span class="unit-chevron">▼</span></div><div class="unit-body"><div class="unit-body-inner"><div class="unit-notes-row" style="margin-bottom:.8rem"><div class="unit-notes-col"><div class="unit-notes-label">✅ What I know well</div><textarea class="unit-textarea" id="review-u${num}-know" placeholder="Topics I'm confident with…" oninput="saveAll()"></textarea></div><div class="unit-notes-col"><div class="unit-notes-label">🔁 What to practise more</div><textarea class="unit-textarea" id="review-u${num}-practise" placeholder="Topics to revise…" oninput="saveAll()"></textarea></div></div><div class="unit-notes-label" style="margin-bottom:.35rem">📝 General notes</div><textarea class="unit-textarea" id="review-u${num}-notes" placeholder="Any other notes…" oninput="saveAll()"></textarea><div style="margin-top:.7rem"><div class="unit-notes-label" style="margin-bottom:.35rem">🔗 Links &amp; files</div><ul class="simple-hw-list" id="${lid}"></ul><button class="btn-add-hw" onclick="showHwForm('${fid}')">＋ Add link</button><div class="add-hw-form" id="hwform-${fid}"><div class="form-row"><input type="text" class="inp-main" placeholder="Title" id="hwtxt-${fid}"></div><div class="form-row"><input type="url" class="inp-url" placeholder="https://..." id="hwpages-${fid}" style="flex:1"></div><div class="form-actions"><button class="btn-save-hw" onclick="saveLinkItem('${fid}','${lid}')">Save</button><button class="btn-cancel-hw" onclick="hideHwForm('${fid}')">Cancel</button></div></div></div></div></div>`;
+  document.getElementById('reviewUnitsList').appendChild(div);
+  requestAnimationFrame(() => { div.style.transition = 'opacity .35s ease,transform .35s ease'; div.style.opacity = '1'; div.style.transform = 'translateY(0)'; });
+  document.getElementById('ruNum').value = ''; document.getElementById('ruName').value = '';
+  closeModal('reviewunit');
+}
+
+// ─── MODALS ───
+function openModal(n){ const el = document.getElementById('modal-' + n); el.style.display = 'flex'; setTimeout(() => { const f = el.querySelector('input'); if(f) f.focus(); }, 80); }
+function closeModal(n){ document.getElementById('modal-' + n).style.display = 'none'; }
+document.querySelectorAll('.modal-overlay').forEach(ov => ov.addEventListener('click', e => { if(e.target === ov) ov.style.display = 'none'; }));
+
+// ─── MATERIALS ───
+const _icons = { rose:'📖', sage:'📝', gold:'🎧', blue:'🔗' };
+const _clabels = { rose:'Textbook', sage:'Practice', gold:'Audio', blue:'Resource' };
+
+function addCard(){
+  const title = document.getElementById('rTitle').value.trim();
+  const url   = document.getElementById('rUrl').value.trim();
+  const desc  = document.getElementById('rDesc').value.trim();
+  const color = document.getElementById('rColor').value;
+  if(!title || !url){ alert('Please fill in title and URL.'); return; }
+  const card = document.createElement('a'); card.className = 'card ' + color; card.href = url; card.target = '_blank';
+  card.style.cssText = 'opacity:0;animation:none';
+  card.innerHTML = `<span class="card-icon">${_icons[color]}</span><div class="card-label">${_clabels[color]}</div><h3>${title}</h3><p>${desc || 'Click to open.'}</p><span class="card-arrow">→</span>`;
+  const board = document.getElementById('cardGrid').querySelector('.board');
+  document.getElementById('cardGrid').insertBefore(card, board);
+  requestAnimationFrame(() => { card.style.transition = 'opacity .4s ease,transform .4s ease'; card.style.transform = 'translateY(14px)'; requestAnimationFrame(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }); });
+  ['rTitle','rUrl','rDesc'].forEach(i => document.getElementById(i).value = '');
+  closeModal('resource');
+}
+
+// ─── BLOCK SYSTEM ───
+function toggleBlockPicker(uid){
+  const picker = document.getElementById('blockpicker-' + uid);
+  if(picker) picker.classList.toggle('open');
+}
+
+function addBlock(uid, type){
+  const container = document.getElementById('blocks-' + uid);
+  if(!container) return;
+  const bid = 'block-' + Date.now();
+  let inner = '';
+  if(type === 'note'){
+    inner = `<div class="block-label">📝 Note</div><textarea class="block-textarea" id="${bid}-txt" placeholder="Write your note…" oninput="saveAll()"></textarea>`;
+  } else if(type === 'text'){
+    inner = `<div class="block-label">📄 Text / Task</div><textarea class="block-text-area" id="${bid}-txt" placeholder="Add task description, instructions, reading text…" oninput="saveAll()"></textarea>`;
+  } else if(type === 'image'){
+    inner = `<div class="block-label">🖼️ Image</div><div class="block-img-upload"><label class="block-img-btn">📁 Choose image<input type="file" accept="image/*" style="display:none" onchange="loadBlockImage(this,'${bid}')"></label><img id="${bid}-img" class="block-img-preview" alt=""><input class="block-img-caption" id="${bid}-cap" placeholder="Caption (optional)…" oninput="saveAll()"></div>`;
+  } else if(type === 'link'){
+    inner = `<div class="block-label">🔗 Link</div><div class="block-link-row"><input class="block-link-input" id="${bid}-title" placeholder="Title…" oninput="saveAll()"><input class="block-link-input" id="${bid}-url" placeholder="https://…" oninput="saveAll()"><button class="block-link-btn" onclick="openBlockLink('${bid}')">Open →</button></div>`;
+  } else if(type === 'task'){
+    inner = `<div class="block-label">✅ Tasks</div><ul class="block-task-list" id="${bid}-list"></ul><div class="block-add-task"><input type="text" id="${bid}-inp" placeholder="Add task…" onkeydown="if(event.key==='Enter')addBlockTask('${bid}')"><button onclick="addBlockTask('${bid}')">＋</button></div>`;
+  } else if(type === 'vocab'){
+    inner = `<div class="block-label">📋 Vocabulary</div><table class="vocab-table"><thead><tr><th>Word / Phrase</th><th>Translation</th></tr></thead><tbody id="${bid}-tbody"><tr><td><input placeholder="word…" oninput="saveAll()"></td><td><input placeholder="translation…" oninput="saveAll()"></td></tr><tr><td><input placeholder="word…" oninput="saveAll()"></td><td><input placeholder="translation…" oninput="saveAll()"></td></tr></tbody></table><button class="btn-add-vocab-row" onclick="addVocabRow('${bid}-tbody')">＋ Add row</button>`;
+  }
+  const div = document.createElement('div'); div.className = 'content-block'; div.id = bid;
+  div.innerHTML = `<button class="block-delete" onclick="document.getElementById('${bid}').remove();saveAll()" title="Delete">✕</button>${inner}`;
+  container.appendChild(div);
+  const picker = document.getElementById('blockpicker-' + uid);
+  if(picker) picker.classList.remove('open');
+  // Hide placeholder if it exists
+  const ph = container.parentElement.querySelector('.lesson-placeholder');
+  if(ph) ph.style.display = 'none';
+  saveAll();
+}
+
+function addVocabRow(tbodyId){
+  const tbody = document.getElementById(tbodyId);
+  if(!tbody) return;
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td><input placeholder="word…" oninput="saveAll()"></td><td><input placeholder="translation…" oninput="saveAll()"></td>`;
+  tbody.appendChild(tr);
+}
+
+function openBlockLink(bid){
+  const url = document.getElementById(bid + '-url')?.value.trim();
+  if(url) window.open(url, '_blank');
+}
+
+function loadBlockImage(input, bid){
+  const file = input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = document.getElementById(bid + '-img');
+    if(img){ img.src = e.target.result; img.classList.add('show'); }
+    saveAll();
+  };
+  reader.readAsDataURL(file);
+}
+
+function addBlockTask(bid){
+  const inp = document.getElementById(bid + '-inp');
+  if(!inp || !inp.value.trim()) return;
+  const list = document.getElementById(bid + '-list');
+  const li = document.createElement('li'); li.className = 'block-task-item';
+  const tid = 'bt-' + Date.now(); li.id = tid;
+  li.innerHTML = `<div class="block-task-check" onclick="toggleBlockTask('${tid}')"></div><span class="block-task-text">${inp.value.trim()}</span><button onclick="document.getElementById('${tid}').remove();saveAll()" style="background:none;border:none;cursor:pointer;color:#c0b4aa;font-size:.7rem;margin-left:auto">✕</button>`;
+  list.appendChild(li); inp.value = ''; saveAll();
+}
+
+function toggleBlockTask(tid){
+  const li = document.getElementById(tid);
+  const chk = li.querySelector('.block-task-check');
+  const txt = li.querySelector('.block-task-text');
+  if(!chk || !txt) return;
+  chk.classList.toggle('done');
+  txt.classList.toggle('done');
+  saveAll();
+}
+
+// ─── TEACHER MODE ───
+let teacherMode = false;
+
+function toggleTeacherMode(){
+  teacherMode = !teacherMode;
+  document.body.classList.toggle('teacher-mode', teacherMode);
+  document.getElementById('teacherBtn').classList.toggle('active', teacherMode);
+  document.getElementById('teacherBtn').textContent = teacherMode ? '✓ Done editing' : '✏️ Teacher Mode';
+  document.getElementById('teacherBar').classList.toggle('show', teacherMode);
+  if(teacherMode){
+    document.querySelectorAll('.lesson-acc-title, .lesson-meta-line, .unit-title-text, .lesson-placeholder strong, .lesson-placeholder p').forEach(el => {
+      if(!el.querySelector('input,textarea,button')) el.contentEditable = 'true';
+    });
+  } else {
+    document.querySelectorAll('[contenteditable="true"]').forEach(el => { el.contentEditable = 'false'; });
+    saveAll();
+  }
+}
+
+// ─── INIT ───
+window.addEventListener('DOMContentLoaded', () => {
+  loadAll();
+  initFirebase();
+});
+</script>
+</body>
+</html>
