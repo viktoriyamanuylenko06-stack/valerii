@@ -308,31 +308,625 @@ footer{text-align:center;padding:2rem;font-size:.7rem;color:#a89e94;letter-spaci
             </div>
           </div>
 
-          <!-- Lesson A -->
+          <!-- Lesson 1 — Present Simple vs Continuous (embedded) -->
           <div class="lesson-accordion" id="cw-acc-1a">
             <div class="lesson-acc-header" onclick="toggleAcc('cw-acc-1a')">
-              <span class="lesson-acc-tag">Lesson A</span>
-              <span class="lesson-acc-title">Lesson A — topic</span>
+              <span class="lesson-acc-tag">Lesson 1</span>
+              <span class="lesson-acc-title">Present Simple vs Present Continuous — rules, exercises &amp; auction</span>
               <span class="lesson-acc-chevron">▼</span>
             </div>
             <div class="lesson-acc-body"><div class="lesson-acc-inner">
-              <div class="lesson-meta-line">Grammar: · Vocabulary: · Pronunciation:</div>
-              <div class="lesson-placeholder">
-                <strong>Add lesson content</strong>
-                <p>Use the blocks below to add notes, texts, tasks, vocabulary, or links for this lesson.</p>
-              </div>
-              <div id="blocks-cw-acc-1a"></div>
-              <div class="block-picker" id="blockpicker-cw-acc-1a">
-                <button class="block-type-btn" onclick="addBlock('cw-acc-1a','note')">📝 Note</button>
-                <button class="block-type-btn" onclick="addBlock('cw-acc-1a','text')">📄 Text</button>
-                <button class="block-type-btn" onclick="addBlock('cw-acc-1a','image')">🖼️ Image</button>
-                <button class="block-type-btn" onclick="addBlock('cw-acc-1a','link')">🔗 Link</button>
-                <button class="block-type-btn" onclick="addBlock('cw-acc-1a','task')">✅ Tasks</button>
-                <button class="block-type-btn" onclick="addBlock('cw-acc-1a','vocab')">📋 Vocabulary</button>
-              </div>
-              <button class="btn-add-block" onclick="toggleBlockPicker('cw-acc-1a')">＋ Add block</button>
+              <div class="lesson-meta-line">Grammar: Present Simple / Continuous · Stative verbs · Speaking · Game</div>
+              <iframe
+                title="Present Simple vs Continuous"
+                style="width:100%;min-height:900px;border:1px solid var(--border);border-radius:4px;background:#fdfaf3;display:block;"
+                onload="try{this.style.height=(this.contentDocument.documentElement.scrollHeight+20)+'px'}catch(e){}"
+                srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;ru&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+&lt;title&gt;Present Simple vs Present Continuous&lt;/title&gt;
+&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800;9..144,900&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;style&gt;
+:root{
+  --bg:#fdfaf3;
+  --ink:#1a1a1a;
+  --accent:#e63946;
+  --accent2:#2a9d8f;
+  --gold:#d4a017;
+  --blue:#264653;
+  --paper:#fff;
+  --line:#1a1a1a;
+  --muted:#6b6b6b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--ink);font-family:&#x27;Inter&#x27;,sans-serif;line-height:1.6;scroll-behavior:smooth}
+body{
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(26,26,26,.08) 1px, transparent 0);
+  background-size:24px 24px;
+}
+.wrap{max-width:1100px;margin:0 auto;padding:40px 24px 80px}
+
+/* HEADER */
+header{
+  border:3px solid var(--ink);
+  background:var(--paper);
+  padding:40px;
+  position:relative;
+  box-shadow:10px 10px 0 var(--ink);
+  margin-bottom:50px;
+}
+header::before{
+  content:&quot;EN · GRAMMAR&quot;;
+  position:absolute;top:-14px;left:30px;background:var(--accent);color:#fff;
+  padding:4px 14px;font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:12px;font-weight:700;letter-spacing:2px;
+}
+h1{
+  font-family:&#x27;Fraunces&#x27;,serif;font-weight:900;font-size:clamp(38px,6vw,68px);
+  line-height:.95;letter-spacing:-2px;margin-bottom:12px;
+}
+h1 .it{font-style:italic;color:var(--accent);font-weight:400}
+.sub{font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:2px}
+
+/* NAV */
+nav{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+nav a{
+  font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:12px;font-weight:700;
+  text-decoration:none;color:var(--ink);border:2px solid var(--ink);
+  padding:8px 14px;background:var(--bg);transition:.15s;
+}
+nav a:hover{background:var(--ink);color:var(--bg)}
+
+/* SECTIONS */
+section{margin-bottom:60px;scroll-margin-top:20px}
+.section-label{
+  display:inline-block;font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:11px;
+  font-weight:700;letter-spacing:2px;background:var(--ink);color:var(--bg);
+  padding:4px 12px;margin-bottom:14px;
+}
+h2{
+  font-family:&#x27;Fraunces&#x27;,serif;font-weight:800;font-size:clamp(28px,4vw,44px);
+  line-height:1;letter-spacing:-1px;margin-bottom:24px;
+}
+h2 .amp{color:var(--accent);font-style:italic;font-weight:400}
+
+/* RULES CARDS */
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:760px){.rules{grid-template-columns:1fr}}
+.card{
+  border:3px solid var(--ink);background:var(--paper);padding:28px;
+  box-shadow:6px 6px 0 var(--ink);position:relative;
+}
+.card.simple{background:#fff8e7}
+.card.cont{background:#e7f5f3}
+.card h3{
+  font-family:&#x27;Fraunces&#x27;,serif;font-size:26px;font-weight:800;margin-bottom:16px;
+  padding-bottom:10px;border-bottom:2px dashed var(--ink);
+}
+.card ul{list-style:none}
+.card li{padding:10px 0;border-bottom:1px solid rgba(0,0,0,.08);font-size:15px}
+.card li:last-child{border:none}
+.card li strong{display:block;font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:4px;font-family:&#x27;JetBrains Mono&#x27;,monospace}
+.card li em{font-style:italic;color:var(--blue);display:block;margin-top:3px;font-size:14px}
+
+.markers{margin-top:24px;border:3px solid var(--ink);background:var(--paper);padding:24px;box-shadow:6px 6px 0 var(--ink)}
+.markers h3{font-family:&#x27;Fraunces&#x27;,serif;font-size:22px;font-weight:800;margin-bottom:14px}
+.mk-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.mk-grid{grid-template-columns:1fr}}
+.mk-grid div{padding:14px;background:var(--bg);border:2px solid var(--ink)}
+.mk-grid div b{display:block;font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:11px;letter-spacing:1px;color:var(--accent);margin-bottom:6px}
+
+.stative{margin-top:24px;border:3px solid var(--ink);background:#fde9e9;padding:24px;box-shadow:6px 6px 0 var(--ink)}
+.stative h3{font-family:&#x27;Fraunces&#x27;,serif;font-size:22px;font-weight:800;margin-bottom:8px}
+.stative p{margin-bottom:12px;font-size:15px}
+.verb-chips{display:flex;flex-wrap:wrap;gap:8px}
+.verb-chips span{
+  background:var(--paper);border:2px solid var(--ink);padding:4px 10px;
+  font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:12px;font-weight:600;
+}
+
+/* EXERCISES */
+.ex-q{
+  background:var(--paper);border:3px solid var(--ink);padding:20px 24px;
+  margin-bottom:16px;box-shadow:4px 4px 0 var(--ink);
+}
+.ex-q .num{
+  display:inline-block;background:var(--ink);color:var(--bg);
+  font-family:&#x27;JetBrains Mono&#x27;,monospace;font-weight:700;padding:2px 10px;
+  margin-right:10px;font-size:13px;
+}
+.ex-q p{font-size:16px;line-height:1.7;margin-bottom:10px}
+.opt{
+  display:inline-block;padding:6px 14px;margin:4px 6px 4px 0;
+  border:2px solid var(--ink);background:var(--bg);cursor:pointer;
+  font-family:&#x27;Inter&#x27;,sans-serif;font-size:15px;font-weight:500;transition:.15s;
+}
+.opt:hover{background:var(--ink);color:var(--bg)}
+.opt.correct{background:var(--accent2);color:#fff;border-color:var(--accent2)}
+.opt.wrong{background:var(--accent);color:#fff;border-color:var(--accent);text-decoration:line-through}
+.opt.disabled{pointer-events:none;opacity:.85}
+.feedback{font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:12px;margin-top:6px;display:none}
+.feedback.show{display:block}
+.feedback.ok{color:var(--accent2)}
+.feedback.no{color:var(--accent)}
+
+/* Ex2 toggle */
+.sent-toggle{
+  display:block;padding:14px 18px;background:var(--paper);border:3px solid var(--ink);
+  margin-bottom:10px;cursor:pointer;box-shadow:4px 4px 0 var(--ink);
+  font-size:16px;transition:.15s;
+}
+.sent-toggle:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.sent-toggle.marked-wrong{background:#ffd9d9}
+.sent-toggle.marked-correct{background:#d9f5d9}
+.sent-toggle .hint{display:none;margin-top:8px;font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:12px;color:var(--accent)}
+.sent-toggle.marked-wrong .hint{display:block}
+
+/* SPEAKING */
+.speak-card{
+  background:#264653;color:#fdfaf3;border:3px solid var(--ink);padding:28px;
+  box-shadow:8px 8px 0 var(--ink);margin-bottom:20px;
+}
+.speak-card h3{font-family:&#x27;Fraunces&#x27;,serif;font-size:24px;margin-bottom:14px;color:#ffd166}
+.speak-card ol{padding-left:20px}
+.speak-card li{margin:10px 0;font-size:15px}
+.speak-card .prompts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+@media(max-width:640px){.speak-card .prompts{grid-template-columns:1fr}}
+.speak-card .prompts div{
+  background:rgba(255,255,255,.08);border:2px dashed #ffd166;padding:10px 14px;
+  font-size:14px;
+}
+
+/* AUCTION */
+.auction{
+  border:4px solid var(--ink);background:linear-gradient(135deg,#ffd166 0%,#ffba08 100%);
+  padding:36px;box-shadow:12px 12px 0 var(--ink);position:relative;overflow:hidden;
+}
+.auction::before{
+  content:&quot;&quot;;position:absolute;inset:0;
+  background-image:repeating-linear-gradient(45deg,transparent 0 20px,rgba(0,0,0,.04) 20px 21px);
+  pointer-events:none;
+}
+.auction-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:24px;position:relative}
+.auction h2{margin:0}
+.balance{
+  background:var(--ink);color:#ffd166;padding:14px 22px;border:3px solid var(--ink);
+  font-family:&#x27;JetBrains Mono&#x27;,monospace;font-weight:700;
+}
+.balance .lbl{display:block;font-size:11px;letter-spacing:2px;opacity:.7}
+.balance .amt{display:block;font-size:32px;line-height:1}
+.auction-rules{
+  background:var(--paper);border:3px solid var(--ink);padding:18px;margin-bottom:24px;
+  font-size:14px;position:relative;
+}
+.auction-rules b{font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:12px;letter-spacing:1px}
+
+.lot{
+  background:var(--paper);border:3px solid var(--ink);padding:22px;margin-bottom:16px;
+  box-shadow:5px 5px 0 var(--ink);position:relative;
+}
+.lot-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:10px}
+.lot-num{
+  font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:11px;font-weight:700;letter-spacing:2px;
+  background:var(--accent);color:#fff;padding:4px 10px;
+}
+.lot-status{font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:11px;font-weight:700;letter-spacing:1px;color:var(--muted)}
+.lot-sentence{
+  font-family:&#x27;Fraunces&#x27;,serif;font-size:22px;font-weight:600;margin:14px 0;
+  padding:14px;background:var(--bg);border-left:4px solid var(--ink);
+}
+.lot-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.lot-controls input{
+  font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:16px;font-weight:700;
+  border:2px solid var(--ink);padding:8px 12px;width:140px;background:var(--bg);
+}
+.lot-controls button{
+  font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:12px;font-weight:700;letter-spacing:1px;
+  border:2px solid var(--ink);background:var(--bg);padding:10px 16px;cursor:pointer;transition:.15s;
+}
+.lot-controls button:hover{background:var(--ink);color:var(--bg)}
+.bid-correct{background:var(--accent2)!important;color:#fff!important;border-color:var(--accent2)!important}
+.bid-wrong{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important}
+.lot.resolved{opacity:.95}
+.lot.won{background:#e7f9e7}
+.lot.lost{background:#ffe7e7}
+.lot-result{
+  margin-top:12px;padding:12px;font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:13px;
+  display:none;border:2px dashed var(--ink);
+}
+.lot.resolved .lot-result{display:block}
+.lot-result .win{color:#0a7a3f;font-weight:700}
+.lot-result .lose{color:#a02020;font-weight:700}
+
+.reset-btn{
+  margin-top:20px;font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:12px;font-weight:700;
+  border:3px solid var(--ink);background:var(--paper);padding:12px 20px;cursor:pointer;
+  letter-spacing:1px;
+}
+.reset-btn:hover{background:var(--ink);color:var(--paper)}
+.ex-reset{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:11px;font-weight:700;letter-spacing:1px;
+  border:2px solid var(--ink);background:var(--paper);padding:8px 14px;cursor:pointer;
+  margin-bottom:20px;transition:.15s;
+}
+.ex-reset:hover{background:var(--ink);color:var(--paper)}
+.ex-reset{
+  display:inline-flex;align-items:center;gap:6px;margin-top:14px;
+  font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:11px;font-weight:700;letter-spacing:1.5px;
+  border:2px solid var(--ink);background:var(--paper);padding:8px 14px;cursor:pointer;
+  transition:.15s;
+}
+.ex-reset:hover{background:var(--ink);color:var(--paper)}
+
+/* FOOTER */
+footer{
+  margin-top:60px;padding-top:24px;border-top:2px solid var(--ink);
+  font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:12px;color:var(--muted);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;wrap&quot;&gt;
+
+&lt;header&gt;
+  &lt;div class=&quot;sub&quot;&gt;Unit 1 · English Grammar&lt;/div&gt;
+  &lt;h1&gt;Present Simple &lt;span class=&quot;it&quot;&gt;vs&lt;/span&gt;&lt;br&gt;Present Continuous&lt;/h1&gt;
+  &lt;nav&gt;
+    &lt;a href=&quot;#rules&quot;&gt;① Rules&lt;/a&gt;
+    &lt;a href=&quot;#ex1&quot;&gt;② Exercise 1&lt;/a&gt;
+    &lt;a href=&quot;#ex2&quot;&gt;③ Exercise 2&lt;/a&gt;
+    &lt;a href=&quot;#ex3&quot;&gt;④ Exercise 3&lt;/a&gt;
+    &lt;a href=&quot;#speaking&quot;&gt;⑤ Speaking&lt;/a&gt;
+    &lt;a href=&quot;#auction&quot;&gt;⑥ Auction 💰&lt;/a&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;
+
+&lt;!-- RULES --&gt;
+&lt;section id=&quot;rules&quot;&gt;
+  &lt;span class=&quot;section-label&quot;&gt;▸ THE RULES&lt;/span&gt;
+  &lt;h2&gt;Form &lt;span class=&quot;amp&quot;&gt;&amp;&lt;/span&gt; Use&lt;/h2&gt;
+
+  &lt;div class=&quot;rules&quot;&gt;
+    &lt;div class=&quot;card simple&quot;&gt;
+      &lt;h3&gt;Present Simple&lt;/h3&gt;
+      &lt;p style=&quot;font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:12px;background:var(--ink);color:var(--bg);padding:6px 10px;margin-bottom:14px;&quot;&gt;I/you/we/they &lt;b&gt;work&lt;/b&gt; · he/she/it &lt;b&gt;works&lt;/b&gt;&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;strong&gt;Current habits&lt;/strong&gt;Toby &lt;b&gt;walks&lt;/b&gt; to work.&lt;em&gt;every day, every Monday&lt;/em&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;How often things happen&lt;/strong&gt;Angela &lt;b&gt;doesn&#x27;t visit&lt;/b&gt; us very often.&lt;em&gt;always, usually, often, sometimes, never&lt;/em&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;Permanent situations&lt;/strong&gt;Carlo &lt;b&gt;works&lt;/b&gt; in a travel agent&#x27;s.&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;States &amp; feelings&lt;/strong&gt;I &lt;b&gt;love&lt;/b&gt; coffee. Do you &lt;b&gt;have&lt;/b&gt; a car?&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;General truths / facts&lt;/strong&gt;Poland &lt;b&gt;is&lt;/b&gt; in the European Union.&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;Timetables &amp; schedules&lt;/strong&gt;The bus &lt;b&gt;leaves&lt;/b&gt; at 2:10.&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;card cont&quot;&gt;
+      &lt;h3&gt;Present Continuous&lt;/h3&gt;
+      &lt;p style=&quot;font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:12px;background:var(--ink);color:var(--bg);padding:6px 10px;margin-bottom:14px;&quot;&gt;am / is / are + verb-&lt;b&gt;ing&lt;/b&gt;&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;strong&gt;Actions happening now&lt;/strong&gt;Mike &lt;b&gt;is driving&lt;/b&gt; to work at the moment.&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;Temporary situations&lt;/strong&gt;Are they &lt;b&gt;staying&lt;/b&gt; in a hotel near the stadium?&lt;em&gt;this week, this month, currently&lt;/em&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;Temporary series of actions&lt;/strong&gt;Taxi drivers &lt;b&gt;aren&#x27;t stopping&lt;/b&gt; at the train station.&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;Changing / developing situations&lt;/strong&gt;Holidays abroad &lt;b&gt;are becoming&lt;/b&gt; popular.&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;Annoying habits (with &lt;i&gt;always&lt;/i&gt;)&lt;/strong&gt;Dad &lt;b&gt;is always cleaning&lt;/b&gt; the car when I want it!&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;Future arrangements&lt;/strong&gt;We&lt;b&gt;&#x27;re getting&lt;/b&gt; married in the summer.&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;markers&quot;&gt;
+    &lt;h3&gt;⚡ Time expressions — your clue words&lt;/h3&gt;
+    &lt;div class=&quot;mk-grid&quot;&gt;
+      &lt;div&gt;&lt;b&gt;Present Simple&lt;/b&gt;always · usually · often · sometimes · never · every day · on Mondays · twice a week&lt;/div&gt;
+      &lt;div&gt;&lt;b&gt;Present Continuous&lt;/b&gt;now · right now · at the moment · currently · today · this week · this month · still&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;stative&quot;&gt;
+    &lt;h3&gt;⚠ Stative verbs — use Simple, not -ing&lt;/h3&gt;
+    &lt;p&gt;Verbs of feelings, thoughts, senses &amp; possession are normally used only in the simple form.&lt;/p&gt;
+    &lt;p&gt;&lt;em&gt;✗ I&#x27;m belonging to a club. → ✓ I belong to a club.&lt;/em&gt;&lt;/p&gt;
+    &lt;div class=&quot;verb-chips&quot;&gt;
+      &lt;span&gt;agree&lt;/span&gt;&lt;span&gt;believe&lt;/span&gt;&lt;span&gt;belong&lt;/span&gt;&lt;span&gt;depend&lt;/span&gt;&lt;span&gt;disagree&lt;/span&gt;
+      &lt;span&gt;doubt&lt;/span&gt;&lt;span&gt;forget&lt;/span&gt;&lt;span&gt;hate&lt;/span&gt;&lt;span&gt;know&lt;/span&gt;&lt;span&gt;like&lt;/span&gt;
+      &lt;span&gt;love&lt;/span&gt;&lt;span&gt;matter&lt;/span&gt;&lt;span&gt;mean&lt;/span&gt;&lt;span&gt;mind&lt;/span&gt;&lt;span&gt;need&lt;/span&gt;
+      &lt;span&gt;owe&lt;/span&gt;&lt;span&gt;own&lt;/span&gt;&lt;span&gt;prefer&lt;/span&gt;&lt;span&gt;realize&lt;/span&gt;&lt;span&gt;seem&lt;/span&gt;
+      &lt;span&gt;suppose&lt;/span&gt;&lt;span&gt;taste&lt;/span&gt;&lt;span&gt;understand&lt;/span&gt;&lt;span&gt;want&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;!-- EXERCISE 1 --&gt;
+&lt;section id=&quot;ex1&quot;&gt;
+  &lt;span class=&quot;section-label&quot;&gt;▸ EXERCISE 1&lt;/span&gt;
+  &lt;h2&gt;Circle the correct word or phrase&lt;/h2&gt;
+  &lt;button class=&quot;ex-reset&quot; onclick=&quot;resetEx1()&quot;&gt;↺ RESET ANSWERS&lt;/button&gt;
+  &lt;div id=&quot;ex1-list&quot;&gt;&lt;/div&gt;
+  &lt;button class=&quot;ex-reset&quot; onclick=&quot;resetEx1()&quot;&gt;↺ RESET EXERCISE 1&lt;/button&gt;
+&lt;/section&gt;
+
+&lt;!-- EXERCISE 2 --&gt;
+&lt;section id=&quot;ex2&quot;&gt;
+  &lt;span class=&quot;section-label&quot;&gt;▸ EXERCISE 2&lt;/span&gt;
+  &lt;h2&gt;Which sentences are incorrect? &lt;span class=&quot;amp&quot;&gt;Tap to mark.&lt;/span&gt;&lt;/h2&gt;
+  &lt;p style=&quot;margin-bottom:16px;font-size:14px;color:var(--muted)&quot;&gt;Six of these sentences are wrong (stative verbs!). Click a sentence to mark it as incorrect — the correction will appear.&lt;/p&gt;
+  &lt;button class=&quot;ex-reset&quot; onclick=&quot;resetEx2()&quot;&gt;↺ RESET ANSWERS&lt;/button&gt;
+  &lt;div id=&quot;ex2-list&quot;&gt;&lt;/div&gt;
+  &lt;button class=&quot;ex-reset&quot; onclick=&quot;resetEx2()&quot;&gt;↺ RESET EXERCISE 2&lt;/button&gt;
+&lt;/section&gt;
+
+&lt;!-- EXERCISE 3 --&gt;
+&lt;section id=&quot;ex3&quot;&gt;
+  &lt;span class=&quot;section-label&quot;&gt;▸ EXERCISE 3 · SPEAKING&lt;/span&gt;
+  &lt;h2&gt;Complete about yourself&lt;/h2&gt;
+  &lt;div class=&quot;speak-card&quot;&gt;
+    &lt;h3&gt;🗣 Say it out loud — then write it down&lt;/h3&gt;
+    &lt;ol&gt;
+      &lt;li&gt;&lt;b&gt;I&lt;/b&gt; … at the moment. &lt;span style=&quot;opacity:.7&quot;&gt;(Present Continuous)&lt;/span&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;b&gt;I usually&lt;/b&gt; … &lt;span style=&quot;opacity:.7&quot;&gt;(Present Simple)&lt;/span&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;b&gt;Next week, I&lt;/b&gt; … &lt;span style=&quot;opacity:.7&quot;&gt;(future arrangement → Continuous)&lt;/span&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;b&gt;I never&lt;/b&gt; … &lt;span style=&quot;opacity:.7&quot;&gt;(Present Simple)&lt;/span&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;b&gt;I&lt;/b&gt; … at the weekend. &lt;span style=&quot;opacity:.7&quot;&gt;(habit → Simple)&lt;/span&gt;&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;!-- SPEAKING EXTRAS --&gt;
+&lt;section id=&quot;speaking&quot;&gt;
+  &lt;span class=&quot;section-label&quot;&gt;▸ SPEAKING ACTIVITIES&lt;/span&gt;
+  &lt;h2&gt;Let&#x27;s &lt;span class=&quot;amp&quot;&gt;talk.&lt;/span&gt;&lt;/h2&gt;
+
+  &lt;div class=&quot;speak-card&quot;&gt;
+    &lt;h3&gt;🎤 Activity 1 · Right now vs Usually&lt;/h3&gt;
+    &lt;p style=&quot;margin-bottom:12px&quot;&gt;Answer each pair of questions using the correct tense.&lt;/p&gt;
+    &lt;div class=&quot;prompts&quot;&gt;
+      &lt;div&gt;What are you &lt;b&gt;wearing&lt;/b&gt; now? What do you &lt;b&gt;usually wear&lt;/b&gt; on weekends?&lt;/div&gt;
+      &lt;div&gt;What are you &lt;b&gt;doing&lt;/b&gt; at this moment? What do you &lt;b&gt;do&lt;/b&gt; every morning?&lt;/div&gt;
+      &lt;div&gt;What are you &lt;b&gt;studying&lt;/b&gt; this week? What do you &lt;b&gt;study&lt;/b&gt; in general?&lt;/div&gt;
+      &lt;div&gt;Who are you &lt;b&gt;talking&lt;/b&gt; to now? Who do you &lt;b&gt;talk&lt;/b&gt; to every day?&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;speak-card&quot;&gt;
+    &lt;h3&gt;🌍 Activity 2 · Changing world&lt;/h3&gt;
+    &lt;p style=&quot;margin-bottom:12px&quot;&gt;Finish the sentences — speak for 30 seconds about each. Use &lt;i&gt;is/are + -ing&lt;/i&gt;.&lt;/p&gt;
+    &lt;div class=&quot;prompts&quot;&gt;
+      &lt;div&gt;The climate … (change how?)&lt;/div&gt;
+      &lt;div&gt;Technology … (develop how?)&lt;/div&gt;
+      &lt;div&gt;People in my country … (become more …?)&lt;/div&gt;
+      &lt;div&gt;Prices … (rise / fall?)&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;speak-card&quot;&gt;
+    &lt;h3&gt;😤 Activity 3 · Annoying habits&lt;/h3&gt;
+    &lt;p style=&quot;margin-bottom:12px&quot;&gt;Use &lt;b&gt;always + -ing&lt;/b&gt; to complain about someone you know!&lt;/p&gt;
+    &lt;div class=&quot;prompts&quot;&gt;
+      &lt;div&gt;My brother is always …&lt;/div&gt;
+      &lt;div&gt;My friend is always …&lt;/div&gt;
+      &lt;div&gt;My teacher is always …&lt;/div&gt;
+      &lt;div&gt;My neighbour is always …&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;!-- AUCTION --&gt;
+&lt;section id=&quot;auction&quot;&gt;
+  &lt;span class=&quot;section-label&quot;&gt;▸ GAME TIME&lt;/span&gt;
+  &lt;div class=&quot;auction&quot;&gt;
+    &lt;div class=&quot;auction-head&quot;&gt;
+      &lt;h2&gt;Grammar &lt;span class=&quot;amp&quot;&gt;Auction&lt;/span&gt; 💰&lt;/h2&gt;
+      &lt;div class=&quot;balance&quot;&gt;
+        &lt;span class=&quot;lbl&quot;&gt;YOUR BALANCE&lt;/span&gt;
+        &lt;span class=&quot;amt&quot;&gt;$&lt;span id=&quot;balance&quot;&gt;5000&lt;/span&gt;&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;auction-rules&quot;&gt;
+      &lt;b&gt;HOW TO PLAY →&lt;/b&gt; You start with &lt;b&gt;$5000&lt;/b&gt;. For each sentence, decide: is it &lt;b&gt;CORRECT&lt;/b&gt; or &lt;b&gt;WRONG&lt;/b&gt;? Place your bet (any amount from $100 up to your balance) and click your choice. Correct guess = you &lt;b&gt;win&lt;/b&gt; your bet. Wrong guess = you &lt;b&gt;lose&lt;/b&gt; it. Try to finish with more than $5000!
+    &lt;/div&gt;
+
+    &lt;div id=&quot;auction-list&quot;&gt;&lt;/div&gt;
+
+    &lt;button class=&quot;reset-btn&quot; onclick=&quot;resetAuction()&quot;&gt;↺ RESET GAME&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;footer&gt;
+  &lt;span&gt;© Present Tenses · Unit 1&lt;/span&gt;
+  &lt;span&gt;Good luck! 🍀&lt;/span&gt;
+&lt;/footer&gt;
+
+&lt;/div&gt;
+
+&lt;script&gt;
+/* ============ EXERCISE 1 ============ */
+const ex1 = [
+  {q:&quot;Elizabeth ___ to bed at around eleven o&#x27;clock.&quot;, opts:[&quot;usually goes&quot;,&quot;is usually going&quot;], a:0, why:&quot;Habit → Present Simple.&quot;},
+  {q:&quot;Dan ___ on the other phone right now.&quot;, opts:[&quot;talks&quot;,&quot;is talking&quot;], a:1, why:&quot;&#x27;Right now&#x27; → Continuous.&quot;},
+  {q:&quot;We ___ any meat at the moment as we&#x27;re both on a diet.&quot;, opts:[&quot;don&#x27;t eat&quot;,&quot;aren&#x27;t eating&quot;], a:1, why:&quot;&#x27;At the moment&#x27; → temporary → Continuous.&quot;},
+  {q:&quot;___ increasingly safe?&quot;, opts:[&quot;Does air travel get&quot;,&quot;Is air travel getting&quot;], a:1, why:&quot;Changing/developing situation → Continuous.&quot;},
+  {q:&quot;My mum ___ me every weekend without fail.&quot;, opts:[&quot;calls&quot;,&quot;is calling&quot;], a:0, why:&quot;Regular habit → Simple.&quot;},
+  {q:&quot;How much ___?&quot;, opts:[&quot;do babysitters generally earn&quot;,&quot;are babysitters generally earning&quot;], a:0, why:&quot;&#x27;Generally&#x27; → general fact → Simple.&quot;},
+  {q:&quot;___ up with excuses for not doing your homework. It&#x27;s so annoying!&quot;, opts:[&quot;You always come&quot;,&quot;You&#x27;re always coming&quot;], a:1, why:&quot;Annoying habit with &#x27;always&#x27; → Continuous.&quot;},
+  {q:&quot;I ___ out much during the week but I ___ to go out on Saturday night.&quot;, opts:[&quot;don&#x27;t go / always try&quot;,&quot;&#x27;m not going / &#x27;m always trying&quot;], a:0, why:&quot;Both are habits → Simple.&quot;},
+  {q:&quot;No, the train ___ at Cirencester on Saturdays.&quot;, opts:[&quot;does stop&quot;,&quot;is stopping&quot;], a:0, why:&quot;Schedule / fact → Simple (with emphatic &#x27;does&#x27;).&quot;},
+  {q:&quot;My mum ___ part in ice-skating competitions almost every weekend.&quot;, opts:[&quot;takes&quot;,&quot;is taking&quot;], a:0, why:&quot;&#x27;Every weekend&#x27; = habit → Simple.&quot;},
+];
+
+const ex1List = document.getElementById(&#x27;ex1-list&#x27;);
+function renderEx1(){
+  ex1List.innerHTML = &#x27;&#x27;;
+  ex1.forEach((item,i)=&gt;{
+    const div = document.createElement(&#x27;div&#x27;);
+    div.className=&#x27;ex-q&#x27;;
+    div.innerHTML = `&lt;p&gt;&lt;span class=&quot;num&quot;&gt;${i+1}&lt;/span&gt;${item.q.replace(&#x27;___&#x27;,&#x27;&lt;b style=&quot;color:var(--accent)&quot;&gt;___&lt;/b&gt;&#x27;)}&lt;/p&gt;
+      ${item.opts.map((o,j)=&gt;`&lt;span class=&quot;opt&quot; data-i=&quot;${i}&quot; data-j=&quot;${j}&quot;&gt;${o}&lt;/span&gt;`).join(&#x27;&#x27;)}
+      &lt;div class=&quot;feedback&quot; id=&quot;fb-${i}&quot;&gt;&lt;/div&gt;`;
+    ex1List.appendChild(div);
+  });
+  ex1List.querySelectorAll(&#x27;.opt&#x27;).forEach(el=&gt;{
+    el.addEventListener(&#x27;click&#x27;,()=&gt;{
+      const i=+el.dataset.i, j=+el.dataset.j;
+      const parent=el.parentElement;
+      parent.querySelectorAll(&#x27;.opt&#x27;).forEach(o=&gt;o.classList.add(&#x27;disabled&#x27;));
+      const fb = document.getElementById(&#x27;fb-&#x27;+i);
+      if(j===ex1[i].a){
+        el.classList.add(&#x27;correct&#x27;);
+        fb.className=&#x27;feedback show ok&#x27;;
+        fb.textContent=&#x27;✓ Correct — &#x27;+ex1[i].why;
+      }else{
+        el.classList.add(&#x27;wrong&#x27;);
+        parent.querySelectorAll(&#x27;.opt&#x27;)[ex1[i].a].classList.add(&#x27;correct&#x27;);
+        fb.className=&#x27;feedback show no&#x27;;
+        fb.textContent=&#x27;✗ &#x27;+ex1[i].why;
+      }
+    });
+  });
+}
+function resetEx1(){ renderEx1(); }
+renderEx1();
+
+/* ============ EXERCISE 2 ============ */
+const ex2 = [
+  {s:&quot;Can you phone back later? I have dinner at the moment.&quot;, wrong:true, fix:&quot;I&#x27;m having dinner (action now → Continuous; &#x27;have&#x27; = eat, not state).&quot;},
+  {s:&quot;I&#x27;m sorry, but I disagree with you.&quot;, wrong:false},
+  {s:&quot;Is she seeing anyone at the moment?&quot;, wrong:false, note:&quot;&#x27;see&#x27; = date → can be continuous&quot;},
+  {s:&quot;I&#x27;m annoyed with him. He&#x27;s still owing me money.&quot;, wrong:true, fix:&quot;He still owes me money (owe = stative).&quot;},
+  {s:&quot;I don&#x27;t need any help, thanks. I just look.&quot;, wrong:true, fix:&quot;I&#x27;m just looking (happening right now).&quot;},
+  {s:&quot;I go to the shops. Do you want anything?&quot;, wrong:true, fix:&quot;I&#x27;m going to the shops (action now / plan).&quot;},
+  {s:&quot;I&#x27;m not a tea drinker. I&#x27;m preferring coffee.&quot;, wrong:true, fix:&quot;I prefer coffee (prefer = stative).&quot;},
+  {s:&quot;I love cycling. I&#x27;m belonging to a local cycling club.&quot;, wrong:true, fix:&quot;I belong to a club (belong = stative).&quot;},
+];
+const ex2List = document.getElementById(&#x27;ex2-list&#x27;);
+function renderEx2(){
+  ex2List.innerHTML = &#x27;&#x27;;
+  ex2.forEach((item,i)=&gt;{
+    const d = document.createElement(&#x27;div&#x27;);
+    d.className=&#x27;sent-toggle&#x27;;
+    d.innerHTML = `&lt;b&gt;${i+1}.&lt;/b&gt; ${item.s}&lt;div class=&quot;hint&quot;&gt;&lt;/div&gt;`;
+    let state = 0; // 0=neutral, 1=wrong, 2=correct
+    d.addEventListener(&#x27;click&#x27;,()=&gt;{
+      state = (state+1)%3;
+      d.classList.remove(&#x27;marked-wrong&#x27;,&#x27;marked-correct&#x27;);
+      const hint = d.querySelector(&#x27;.hint&#x27;);
+      if(state===1){
+        d.classList.add(&#x27;marked-wrong&#x27;);
+        if(item.wrong){ hint.innerHTML=&#x27;✓ Yes — incorrect. → &#x27;+item.fix; hint.style.color=&#x27;#0a7a3f&#x27;; }
+        else { hint.innerHTML=&#x27;✗ Actually this sentence is fine.&#x27;; hint.style.color=&#x27;#a02020&#x27;; }
+      }else if(state===2){
+        d.classList.add(&#x27;marked-correct&#x27;);
+        if(!item.wrong){ hint.innerHTML=&#x27;✓ Yes — this one is correct.&#x27;+(item.note?&#x27; (&#x27;+item.note+&#x27;)&#x27;:&#x27;&#x27;); hint.style.color=&#x27;#0a7a3f&#x27;;hint.style.display=&#x27;block&#x27;; }
+        else { hint.innerHTML=&#x27;✗ No — this one is wrong. → &#x27;+item.fix; hint.style.color=&#x27;#a02020&#x27;;hint.style.display=&#x27;block&#x27;; }
+      }else{
+        hint.style.display=&#x27;&#x27;;
+        hint.innerHTML=&#x27;&#x27;;
+      }
+    });
+    ex2List.appendChild(d);
+  });
+}
+function resetEx2(){ renderEx2(); }
+renderEx2();
+
+/* ============ AUCTION ============ */
+const lots = [
+  {s:&quot;She is knowing the answer.&quot;, correct:false, fix:&quot;&#x27;know&#x27; is stative → She knows the answer.&quot;},
+  {s:&quot;Water boils at 100°C.&quot;, correct:true, fix:&quot;General fact → Present Simple ✓&quot;},
+  {s:&quot;Look! The bus is coming.&quot;, correct:true, fix:&quot;Action happening now ✓&quot;},
+  {s:&quot;I am wanting a new phone.&quot;, correct:false, fix:&quot;&#x27;want&#x27; is stative → I want a new phone.&quot;},
+  {s:&quot;My sister is always losing her keys.&quot;, correct:true, fix:&quot;Annoying habit with &#x27;always&#x27; ✓&quot;},
+  {s:&quot;What do you do this weekend?&quot;, correct:false, fix:&quot;Future arrangement → What are you doing this weekend?&quot;},
+  {s:&quot;He usually is drinking tea in the morning.&quot;, correct:false, fix:&quot;Habit → He usually drinks tea.&quot;},
+  {s:&quot;Prices are rising very fast these days.&quot;, correct:true, fix:&quot;Changing situation ✓&quot;},
+  {s:&quot;The Earth is going around the Sun.&quot;, correct:false, fix:&quot;General truth → The Earth goes around the Sun.&quot;},
+  {s:&quot;I&#x27;m staying with my uncle this week.&quot;, correct:true, fix:&quot;Temporary situation ✓&quot;},
+  {s:&quot;Do you understand what I mean?&quot;, correct:true, fix:&quot;&#x27;understand&#x27; is stative ✓&quot;},
+  {s:&quot;The film is starting at 8pm tonight.&quot;, correct:true, fix:&quot;Arranged/scheduled event ✓&quot;},
+  {s:&quot;I am not believing this news.&quot;, correct:false, fix:&quot;&#x27;believe&#x27; is stative → I don&#x27;t believe this news.&quot;},
+  {s:&quot;How often are you going to the gym?&quot;, correct:false, fix:&quot;Frequency question → How often do you go to the gym?&quot;},
+  {s:&quot;Listen! Someone is knocking at the door.&quot;, correct:true, fix:&quot;Happening right now ✓&quot;},
+];
+
+let balance = 5000;
+const balanceEl = document.getElementById(&#x27;balance&#x27;);
+const auctionList = document.getElementById(&#x27;auction-list&#x27;);
+
+function renderAuction(){
+  auctionList.innerHTML = &#x27;&#x27;;
+  balanceEl.textContent = balance;
+  lots.forEach((lot,i)=&gt;{
+    const div = document.createElement(&#x27;div&#x27;);
+    div.className = &#x27;lot&#x27; + (lot.resolved?&#x27; resolved&#x27;:&#x27;&#x27;) + (lot.won===true?&#x27; won&#x27;:&#x27;&#x27;) + (lot.won===false?&#x27; lost&#x27;:&#x27;&#x27;);
+    div.innerHTML = `
+      &lt;div class=&quot;lot-head&quot;&gt;
+        &lt;span class=&quot;lot-num&quot;&gt;LOT ${String(i+1).padStart(2,&#x27;0&#x27;)}&lt;/span&gt;
+        &lt;span class=&quot;lot-status&quot;&gt;${lot.resolved?&#x27;RESOLVED&#x27;:&#x27;OPEN FOR BIDS&#x27;}&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;lot-sentence&quot;&gt;&quot;${lot.s}&quot;&lt;/div&gt;
+      ${lot.resolved?&#x27;&#x27;:`
+        &lt;div class=&quot;lot-controls&quot;&gt;
+          &lt;input type=&quot;number&quot; id=&quot;bid-${i}&quot; min=&quot;100&quot; max=&quot;${balance}&quot; step=&quot;100&quot; placeholder=&quot;Bet ($)&quot; value=&quot;500&quot;&gt;
+          &lt;button onclick=&quot;bid(${i},true)&quot;&gt;✓ CORRECT&lt;/button&gt;
+          &lt;button onclick=&quot;bid(${i},false)&quot;&gt;✗ WRONG&lt;/button&gt;
+        &lt;/div&gt;
+      `}
+      &lt;div class=&quot;lot-result&quot;&gt;
+        ${lot.resolved?`
+          &lt;div class=&quot;${lot.won?&#x27;win&#x27;:&#x27;lose&#x27;}&quot;&gt;${lot.won?&#x27;🎉 YOU WON $&#x27;+lot.bet:&#x27;💸 YOU LOST $&#x27;+lot.bet}&lt;/div&gt;
+          &lt;div style=&quot;margin-top:6px;color:var(--ink)&quot;&gt;${lot.fix}&lt;/div&gt;
+        `:&#x27;&#x27;}
+      &lt;/div&gt;
+    `;
+    auctionList.appendChild(div);
+  });
+}
+
+function bid(i, guess){
+  const input = document.getElementById(&#x27;bid-&#x27;+i);
+  let bet = parseInt(input.value)||0;
+  if(bet&lt;100){ alert(&#x27;Minimum bet is $100&#x27;); return; }
+  if(bet&gt;balance){ alert(&#x27;Not enough money! Balance: $&#x27;+balance); return; }
+  const lot = lots[i];
+  lot.resolved = true;
+  lot.bet = bet;
+  if(guess === lot.correct){
+    balance += bet;
+    lot.won = true;
+  }else{
+    balance -= bet;
+    lot.won = false;
+  }
+  renderAuction();
+  if(balance&lt;=0){
+    setTimeout(()=&gt;alert(&#x27;💀 You are bankrupt! Click RESET to try again.&#x27;),200);
+  }else if(lots.every(l=&gt;l.resolved)){
+    setTimeout(()=&gt;{
+      const diff = balance-5000;
+      alert(diff&gt;0?`🏆 Amazing! You finished with $${balance} (+$${diff})`:
+            diff===0?`😐 You broke even at $5000.`:
+            `😢 You finished with $${balance} ($${diff}).`);
+    },300);
+  }
+}
+
+function resetAuction(){
+  balance = 5000;
+  lots.forEach(l=&gt;{delete l.resolved; delete l.won; delete l.bet;});
+  renderAuction();
+}
+
+renderAuction();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
             </div></div>
-          </div><!-- /lesson A -->
+          </div><!-- /lesson 1 -->
 
           <!-- Lesson B -->
           <div class="lesson-accordion" id="cw-acc-1b">
