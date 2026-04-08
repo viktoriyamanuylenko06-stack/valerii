@@ -759,6 +759,12 @@ const ex1 = [
 ];
 
 const ex1List = document.getElementById(&#x27;ex1-list&#x27;);
+const EX1_KEY = &#x27;grammar_ex1_state_v1&#x27;;
+let ex1State = {};
+try { ex1State = JSON.parse(localStorage.getItem(EX1_KEY) || &#x27;{}&#x27;); } catch(e) { ex1State = {}; }
+
+function saveEx1(){ try { localStorage.setItem(EX1_KEY, JSON.stringify(ex1State)); } catch(e){} }
+
 function renderEx1(){
   ex1List.innerHTML = &#x27;&#x27;;
   ex1.forEach((item,i)=&gt;{
@@ -768,10 +774,28 @@ function renderEx1(){
       ${item.opts.map((o,j)=&gt;`&lt;span class=&quot;opt&quot; data-i=&quot;${i}&quot; data-j=&quot;${j}&quot;&gt;${o}&lt;/span&gt;`).join(&#x27;&#x27;)}
       &lt;div class=&quot;feedback&quot; id=&quot;fb-${i}&quot;&gt;&lt;/div&gt;`;
     ex1List.appendChild(div);
+    // Restore saved answer
+    if(ex1State[i] !== undefined){
+      const j = ex1State[i];
+      const opts = div.querySelectorAll(&#x27;.opt&#x27;);
+      opts.forEach(o=&gt;o.classList.add(&#x27;disabled&#x27;));
+      const fb = div.querySelector(&#x27;.feedback&#x27;);
+      if(j===ex1[i].a){
+        opts[j].classList.add(&#x27;correct&#x27;);
+        fb.className=&#x27;feedback show ok&#x27;;
+        fb.textContent=&#x27;✓ Correct — &#x27;+ex1[i].why;
+      }else{
+        opts[j].classList.add(&#x27;wrong&#x27;);
+        opts[ex1[i].a].classList.add(&#x27;correct&#x27;);
+        fb.className=&#x27;feedback show no&#x27;;
+        fb.textContent=&#x27;✗ &#x27;+ex1[i].why;
+      }
+    }
   });
   ex1List.querySelectorAll(&#x27;.opt&#x27;).forEach(el=&gt;{
     el.addEventListener(&#x27;click&#x27;,()=&gt;{
       const i=+el.dataset.i, j=+el.dataset.j;
+      if(ex1State[i] !== undefined) return; // already answered
       const parent=el.parentElement;
       parent.querySelectorAll(&#x27;.opt&#x27;).forEach(o=&gt;o.classList.add(&#x27;disabled&#x27;));
       const fb = document.getElementById(&#x27;fb-&#x27;+i);
@@ -785,10 +809,16 @@ function renderEx1(){
         fb.className=&#x27;feedback show no&#x27;;
         fb.textContent=&#x27;✗ &#x27;+ex1[i].why;
       }
+      ex1State[i] = j;
+      saveEx1();
     });
   });
 }
-function resetEx1(){ renderEx1(); }
+function resetEx1(){
+  ex1State = {};
+  saveEx1();
+  renderEx1();
+}
 renderEx1();
 
 /* ============ EXERCISE 2 ============ */
@@ -803,34 +833,51 @@ const ex2 = [
   {s:&quot;I love cycling. I&#x27;m belonging to a local cycling club.&quot;, wrong:true, fix:&quot;I belong to a club (belong = stative).&quot;},
 ];
 const ex2List = document.getElementById(&#x27;ex2-list&#x27;);
+const EX2_KEY = &#x27;grammar_ex2_state_v1&#x27;;
+let ex2State = {};
+try { ex2State = JSON.parse(localStorage.getItem(EX2_KEY) || &#x27;{}&#x27;); } catch(e) { ex2State = {}; }
+
+function saveEx2(){ try { localStorage.setItem(EX2_KEY, JSON.stringify(ex2State)); } catch(e){} }
+
+function applyEx2State(d, item, state){
+  d.classList.remove(&#x27;marked-wrong&#x27;,&#x27;marked-correct&#x27;);
+  const hint = d.querySelector(&#x27;.hint&#x27;);
+  if(state===1){
+    d.classList.add(&#x27;marked-wrong&#x27;);
+    if(item.wrong){ hint.innerHTML=&#x27;✓ Yes — incorrect. → &#x27;+item.fix; hint.style.color=&#x27;#0a7a3f&#x27;; }
+    else { hint.innerHTML=&#x27;✗ Actually this sentence is fine.&#x27;; hint.style.color=&#x27;#a02020&#x27;; }
+  }else if(state===2){
+    d.classList.add(&#x27;marked-correct&#x27;);
+    if(!item.wrong){ hint.innerHTML=&#x27;✓ Yes — this one is correct.&#x27;+(item.note?&#x27; (&#x27;+item.note+&#x27;)&#x27;:&#x27;&#x27;); hint.style.color=&#x27;#0a7a3f&#x27;;hint.style.display=&#x27;block&#x27;; }
+    else { hint.innerHTML=&#x27;✗ No — this one is wrong. → &#x27;+item.fix; hint.style.color=&#x27;#a02020&#x27;;hint.style.display=&#x27;block&#x27;; }
+  }else{
+    hint.style.display=&#x27;&#x27;;
+    hint.innerHTML=&#x27;&#x27;;
+  }
+}
+
 function renderEx2(){
   ex2List.innerHTML = &#x27;&#x27;;
   ex2.forEach((item,i)=&gt;{
     const d = document.createElement(&#x27;div&#x27;);
     d.className=&#x27;sent-toggle&#x27;;
     d.innerHTML = `&lt;b&gt;${i+1}.&lt;/b&gt; ${item.s}&lt;div class=&quot;hint&quot;&gt;&lt;/div&gt;`;
-    let state = 0; // 0=neutral, 1=wrong, 2=correct
+    let state = ex2State[i] || 0;
+    applyEx2State(d, item, state);
     d.addEventListener(&#x27;click&#x27;,()=&gt;{
       state = (state+1)%3;
-      d.classList.remove(&#x27;marked-wrong&#x27;,&#x27;marked-correct&#x27;);
-      const hint = d.querySelector(&#x27;.hint&#x27;);
-      if(state===1){
-        d.classList.add(&#x27;marked-wrong&#x27;);
-        if(item.wrong){ hint.innerHTML=&#x27;✓ Yes — incorrect. → &#x27;+item.fix; hint.style.color=&#x27;#0a7a3f&#x27;; }
-        else { hint.innerHTML=&#x27;✗ Actually this sentence is fine.&#x27;; hint.style.color=&#x27;#a02020&#x27;; }
-      }else if(state===2){
-        d.classList.add(&#x27;marked-correct&#x27;);
-        if(!item.wrong){ hint.innerHTML=&#x27;✓ Yes — this one is correct.&#x27;+(item.note?&#x27; (&#x27;+item.note+&#x27;)&#x27;:&#x27;&#x27;); hint.style.color=&#x27;#0a7a3f&#x27;;hint.style.display=&#x27;block&#x27;; }
-        else { hint.innerHTML=&#x27;✗ No — this one is wrong. → &#x27;+item.fix; hint.style.color=&#x27;#a02020&#x27;;hint.style.display=&#x27;block&#x27;; }
-      }else{
-        hint.style.display=&#x27;&#x27;;
-        hint.innerHTML=&#x27;&#x27;;
-      }
+      ex2State[i] = state;
+      saveEx2();
+      applyEx2State(d, item, state);
     });
     ex2List.appendChild(d);
   });
 }
-function resetEx2(){ renderEx2(); }
+function resetEx2(){
+  ex2State = {};
+  saveEx2();
+  renderEx2();
+}
 renderEx2();
 
 /* ============ AUCTION ============ */
@@ -852,9 +899,35 @@ const lots = [
   {s:&quot;Listen! Someone is knocking at the door.&quot;, correct:true, fix:&quot;Happening right now ✓&quot;},
 ];
 
+const AUC_KEY = &#x27;grammar_auction_state_v1&#x27;;
 let balance = 5000;
 const balanceEl = document.getElementById(&#x27;balance&#x27;);
 const auctionList = document.getElementById(&#x27;auction-list&#x27;);
+
+function loadAuction(){
+  try {
+    const saved = JSON.parse(localStorage.getItem(AUC_KEY) || &#x27;null&#x27;);
+    if(saved &amp;&amp; typeof saved.balance === &#x27;number&#x27; &amp;&amp; Array.isArray(saved.lots) &amp;&amp; saved.lots.length === lots.length){
+      balance = saved.balance;
+      saved.lots.forEach((s,i)=&gt;{
+        if(s &amp;&amp; s.resolved){
+          lots[i].resolved = true;
+          lots[i].won = s.won;
+          lots[i].bet = s.bet;
+        }
+      });
+    }
+  } catch(e){}
+}
+function saveAuction(){
+  try {
+    const payload = {
+      balance,
+      lots: lots.map(l =&gt; l.resolved ? {resolved:true, won:l.won, bet:l.bet} : null)
+    };
+    localStorage.setItem(AUC_KEY, JSON.stringify(payload));
+  } catch(e){}
+}
 
 function renderAuction(){
   auctionList.innerHTML = &#x27;&#x27;;
@@ -901,6 +974,7 @@ function bid(i, guess){
     balance -= bet;
     lot.won = false;
   }
+  saveAuction();
   renderAuction();
   if(balance&lt;=0){
     setTimeout(()=&gt;alert(&#x27;💀 You are bankrupt! Click RESET to try again.&#x27;),200);
@@ -917,9 +991,11 @@ function bid(i, guess){
 function resetAuction(){
   balance = 5000;
   lots.forEach(l=&gt;{delete l.resolved; delete l.won; delete l.bet;});
+  try { localStorage.removeItem(AUC_KEY); } catch(e){}
   renderAuction();
 }
 
+loadAuction();
 renderAuction();
 &lt;/script&gt;
 &lt;/body&gt;
